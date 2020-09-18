@@ -42,7 +42,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 1. Edit the file *pre-cluster/main.tf*
 
-2. Update the value of the *az_0*  and *az_1* local variables with the availability zone names, e.g., *us-east-1a* and *us-east-1b*
+2. Update the value of the *availablity_zones* local variable with the availability zone names, e.g., *us-east-1a* and *us-east-1b*
 
 3. Update the value of the *identifier* local variable with a regionally unique (in the account) name for the infrastructure. The name must be a valid hostname format; [hostname(7) — Linux manual page](https://man7.org/linux/man-pages/man7/hostname.7.html). For example, *starter-kit*
 
@@ -50,11 +50,10 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 5. Save the file
 
-**note**: Unlike the Terraform configurations' variables, once the infrastructure is created the values of the local variables cannot be changed.
+**note**: Unlike the Terraform configurations' variables, once the infrastructure is created the values of these local variables cannot be changed.
 
 ## Initialize Pre-Cluster Configuration
 
 1. From the command-line in the *pre-cluster* folder, execute `terraform init`
 
-## TODO
-
+## Create Pre-Cluster Infrastructure
