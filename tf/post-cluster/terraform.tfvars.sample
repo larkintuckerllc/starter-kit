@@ -1,4 +1,3 @@
-certificate_arn = ""
+certificate_arn = "[replace]"
 workloads       = []
-zone_name       = ""
-
+zone_name       = "[replace]"
