@@ -28,21 +28,21 @@ The VPC infrastructure includes:
 
 The VPC infrastructure also includes:
 
-* Route Table Private x 2 (Associated with Subnet Private)
+* Route Table Private x 2 (associated with subnet private)
 
 | Destination  | Target |
 | ------------ | ------ |
 | 172.1.0.0/16 | local  |
 | 0.0.0.0/0    | NG     |
 
-* Route Table Public (Associated with Subnet Public x 2)
+* Route Table Public (associated with subnet public x 2)
 
 | Destination  | Target |
 | ------------ | ------ |
 | 172.1.0.0/16 | local  |
 | 0.0.0.0/0    | IG     |
 
-* Network Access Control List (Associated with Subnet Private x 2 and Subnet Public x 2):
+* Network Access Control List (associated with subnet private x 2 and subnet public x 2):
 
 Inbound:
 
