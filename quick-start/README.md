@@ -52,8 +52,8 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 **note**: Unlike the Terraform configurations' variables, once the infrastructure is created the values of these local variables cannot be changed.
 
-## Initialize Pre-Cluster Configuration
+## Create Pre-Cluster Infrastructure
 
 1. From the command-line in the *pre-cluster* folder, execute `terraform init`
 
-## Create Pre-Cluster Infrastructure
+2. From the command-line in the *pre-cluster* folder, execute `terraform apply`
