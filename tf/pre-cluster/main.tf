@@ -17,10 +17,10 @@ module "vpc" {
   identifier         = local.identifier
 }
 
-output "debug1" {
-  value = module.vpc.subnet_ids
-}
-
-output "debug2" {
-  value = module.vpc.private_subnet_ids
+module "cluster" {
+  source             = "./modules/cluster"
+  identifier         = local.identifier
+  private_subnet_ids = module.vpc.private_subnet_ids
+  subnet_ids         = module.vpc.subnet_ids
+  vpc_id             = module.vpc.vpc_id
 }
