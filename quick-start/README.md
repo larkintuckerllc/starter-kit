@@ -38,7 +38,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 **note**: We will later update the other configuration's variables.
 
-## Update Pre-Cluster Local Variables
+## Update Pre-Cluster Configuration Local Variables
 
 1. Edit the file *pre-cluster/main.tf*
 
@@ -52,4 +52,9 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 **note**: Unlike the Terraform configurations' variables, once the infrastructure is created the values of the local variables cannot be changed.
 
+## Initialize Pre-Cluster Configuration
+
+1. From the command-line in the *pre-cluster* folder, execute `terraform init`
+
 ## TODO
+
