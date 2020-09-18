@@ -2,14 +2,26 @@
 
 ## Amazon Virtual Private Cloud (VPC)
 
+The Amazon infrastructure includes:
+
+* Region
+
+* Availability Zone (AZ) x 2
+
 The VPC infrastructure includes:
 
 * VPC: 172.16.0.0/16
+
 * Subnet (SN) Private: 172.16.128.0/18
+
 * Subnet (SN) Private: 172.16.192.0/18
+
 * Subnet (SN) Public: 172.16.0.0/24
+
 * Subnet (SN) Public: 172.16.1.0/24
+
 * Internet Gateway (IG)
+
 * NAT Gateway (NG) x 2
 
 ![vpc](vpc.png)
