@@ -18,7 +18,7 @@
 
 - Workstation with latest AWS CLI configured with the user with administrator access in the region; [Installing the AWS CLI version 2](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) and [Configuration basics](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html)
 
-- (Recommended) Workstation with Kubernetes CLI, *kubectl*, version 1.17 installed; [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+- Workstation with Kubernetes CLI, *kubectl*, version 1.17 installed; [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
 ## Download Terraform Configurations
 
@@ -57,3 +57,9 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 1. From the command-line in the *pre-cluster* folder, execute `terraform init`
 
 2. From the command-line in the *pre-cluster* folder, execute `terraform apply`
+
+## Access Kubernetes Cluster
+
+1. From the commmand-line, execute `aws eks --region [replace] update-kubeconfig --name [replace]`; replace with region, e.g., *us-east-1*, and identifier, e.g., *starter-kit*
+
+2. From the command-line, execute `kubectl get nodes` to confirm access to Kubernetes Cluster
