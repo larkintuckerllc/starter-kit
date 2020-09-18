@@ -12,11 +12,15 @@ provider "aws" {
 }
 
 module "vpc" {
+  source             = "./modules/vpc"
   availability_zones = local.availability_zones
   identifier         = local.identifier
-  source             = "./modules/vpc"
 }
 
-output "debug" {
+output "debug1" {
   value = module.vpc.subnet_ids
+}
+
+output "debug2" {
+  value = module.vpc.private_subnet_ids
 }

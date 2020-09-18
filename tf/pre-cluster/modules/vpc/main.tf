@@ -1,15 +1,25 @@
 locals {
-  vpc_cidr_block = "172.16.0.0/16"
+  private_subnet = {
+    0 = {
+      availability_zone = var.availability_zones[0]
+      cidr_block        = "172.16.128.0/18"
+    }
+    1 = {
+      availability_zone = var.availability_zones[1]
+      cidr_block        = "172.16.192.0/18"
+    }
+  }
   public_subnet = {
-    public-0 = {
+    0 = {
       availability_zone = var.availability_zones[0]
       cidr_block        = "172.16.0.0/24"
     }
-    public-1 = {
+    1 = {
       availability_zone = var.availability_zones[1]
       cidr_block        = "172.16.1.0/24"
     }
   }
+  vpc_cidr_block = "172.16.0.0/16"
 }
 
 # VPC
@@ -24,15 +34,29 @@ resource "aws_vpc" "this" {
 
 # SUBNETS
 
+resource "aws_subnet" "private" {
+  for_each                = local.private_subnet
+  availability_zone       = each.value["availability_zone"]
+  cidr_block              = each.value["cidr_block"]
+  tags = {
+    "kubernetes.io/cluster/${var.identifier}" = "shared"
+    "kubernetes.io/role/internal-elb"         = "1"
+    Name                                      = "${var.identifier}-private-${each.key}"
+    Infrastructure                            = var.identifier
+    Tier                                      = "private"
+  }
+  vpc_id                  = aws_vpc.this.id
+}
+
 resource "aws_subnet" "public" {
-  for_each = local.public_subnet
+  for_each                = local.public_subnet
   availability_zone       = each.value["availability_zone"]
   cidr_block              = each.value["cidr_block"]
   map_public_ip_on_launch = true
   tags = {
     "kubernetes.io/cluster/${var.identifier}" = "shared"
-    "kubernetes.io/role/elb"                  = "1"
-    Name                                      = "${var.identifier}-${each.key}"
+    "kubernetes.io/role/elb"                  = "0"
+    Name                                      = "${var.identifier}-public-${each.key}"
     Infrastructure                            = var.identifier
     Tier                                      = "public"
   }
@@ -40,32 +64,6 @@ resource "aws_subnet" "public" {
 }
 
 /*
-resource "aws_subnet" "prv_0" {
-  availability_zone = var.az_0
-  cidr_block        = "172.16.128.0/18"
-  tags = {
-    "kubernetes.io/cluster/${var.identifier}" = "shared"
-    "kubernetes.io/role/internal-elb"         = "1"
-    Name                                      = "${var.identifier}-prv_0"
-    Project                                   = var.identifier
-    Tier                                      = "Private"
-  }
-  vpc_id            = aws_vpc.this.id
-}
-
-resource "aws_subnet" "prv_1" {
-  availability_zone = var.az_1
-  cidr_block        = "172.16.192.0/18"
-  tags = {
-    "kubernetes.io/cluster/${var.identifier}" = "shared"
-    "kubernetes.io/role/internal-elb"         = "1"
-    Name                                      = "${var.identifier}-prv_1"
-    Project                                   = var.identifier
-    Tier                                      = "Private"
-  }
-  vpc_id            = aws_vpc.this.id
-}
-
 # GATEWAYS
 
 resource "aws_internet_gateway" "this" {
