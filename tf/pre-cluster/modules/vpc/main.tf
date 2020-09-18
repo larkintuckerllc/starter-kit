@@ -9,6 +9,7 @@ locals {
       cidr_block        = "172.16.192.0/18"
     }
   }
+  private_subnet_ids = [for subnet in values(aws_subnet.private) : subnet.id]
   public_subnet = {
     0 = {
       availability_zone = var.availability_zones[0]
@@ -19,6 +20,8 @@ locals {
       cidr_block        = "172.16.1.0/24"
     }
   }
+  public_subnet_ids  = [for subnet in values(aws_subnet.public) : subnet.id]
+  subnet_ids         = concat(local.private_subnet_ids, local.public_subnet_ids)
   vpc_cidr_block = "172.16.0.0/16"
 }
 
@@ -131,7 +134,6 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public[each.key].id
 }
 
-/*
 # NETWORK ACL
 
 resource "aws_network_acl" "this" {
@@ -151,16 +153,10 @@ resource "aws_network_acl" "this" {
     from_port  = 0
     to_port    = 0
   }
-  subnet_ids = [
-    aws_subnet.pub_0.id,
-    aws_subnet.prv_0.id,
-    aws_subnet.pub_1.id,
-    aws_subnet.prv_1.id
-  ]
+  subnet_ids = local.subnet_ids
   tags = {
-    Name    = "${var.identifier}"
-    Project = var.identifier
+    Infrastructure = var.identifier
+    Name           = "${var.identifier}"
   }
   vpc_id     = aws_vpc.this.id
 }
-*/
