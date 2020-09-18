@@ -62,26 +62,6 @@ resource "aws_iam_role_policy_attachment" "node_instance_worker" {
   role       = aws_iam_role.node_instance.id
 }
 
-# SECURITY GROUPS
-
-resource "aws_security_group" "this" {
-  name   = "${var.identifier}-control-plane"
-  vpc_id = var.vpc_id
-  tags = {
-    Infrastructure = var.identifier
-    Name           = "${var.identifier}-control-plane"
-  }
-}
-
-resource "aws_security_group_rule" "this" {
-  cidr_blocks       = ["0.0.0.0/0"]
-  from_port         = 0
-  protocol          = "-1"
-  security_group_id = aws_security_group.this.id
-  to_port           = 0
-  type              = "egress"
-}
-
 # CLUSTER
 
 resource "aws_eks_cluster" "this" {
@@ -94,9 +74,6 @@ resource "aws_eks_cluster" "this" {
     Infrastructure = var.identifier
   }
   vpc_config {
-    security_group_ids = [
-      aws_security_group.this.id
-    ]
     subnet_ids         = var.subnet_ids
   }
 }
