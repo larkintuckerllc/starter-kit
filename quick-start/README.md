@@ -71,3 +71,19 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 1. From the commmand-line, execute `aws eks --region [replace] update-kubeconfig --name [replace]`; replace with region, e.g., *us-east-1*, and identifier, e.g., *starter-kit*
 
 2. From the command-line, execute `kubectl get nodes` to confirm access to Kubernetes Cluster
+
+## Authenticate Kubernetes Provider
+
+1. From the command-line, execute `kubectl config current-context`; copy output
+
+2. Edit the file *post-cluster/main.tf*
+
+3. Update the value of *config-context* in the *kubernetes* provider block
+
+4. Save the file
+
+## Initialize Post-Cluster Configuration
+
+1. From the command-line in the *post-cluster* folder, execute `terraform init`
+
+## TODO
