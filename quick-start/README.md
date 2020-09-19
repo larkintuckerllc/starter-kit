@@ -87,3 +87,5 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 1. From the command-line in the *post-cluster* folder, execute `terraform init`
 
 ## TODO
+
+`terraform import module.cd.kubernetes_config_map.this kube-system/aws-auth`
