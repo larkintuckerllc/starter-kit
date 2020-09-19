@@ -70,7 +70,7 @@ The cluster infrastructure includes:
 
 * Network Interfaces (NI); in addition to the network interfaces associated with the EC2 instances there are two addition network interfaces. Based on the security group configuration (below), these network interfaces appear to enable the control plane to communicate with the nodes
 
-**note**: While unexpected, one of the two additional network interfaces appeared in a public subnet; not sure why.
+**note**: One of the two additional network interfaces appeared in a public subnet; not sure why.
 
 * Security Group (orange); EKS creates a security group:
 
