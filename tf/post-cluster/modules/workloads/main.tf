@@ -16,10 +16,10 @@ resource "aws_ecr_repository" "this" {
   }
 }
 
-# DEPLOYMENT
+# DEPLOYMENT IGNORE CHANGES (DUPLICATE)
 
-resource "kubernetes_deployment" "this" {
-  for_each = var.workload
+resource "kubernetes_deployment" "ignore_changes" {
+  for_each = {for key, workload in var.workload : key => workload if workload["ignore_changes"]}
   lifecycle {
     ignore_changes = all
   }
@@ -91,6 +91,79 @@ resource "kubernetes_deployment" "this" {
   }
 }
 
+# DEPLOYMENT NOT IGNORE CHANGES (DUPLICATE)
+
+resource "kubernetes_deployment" "not_ignore_changes" {
+  for_each = {for key, workload in var.workload : key => workload if !workload["ignore_changes"]}
+  metadata {
+    name = each.key
+    labels = {
+      "app.kubernetes.io/instance" = each.key
+      "app.kubernetes.io/name"     = local.name
+      "app.kubernetes.io/version"  = local.version
+    }
+  }
+  spec {
+    replicas = 1 # TODO: REPLICAS
+    selector {
+      match_labels = {
+        instance = each.key
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          "app.kubernetes.io/instance" = each.key
+          "app.kubernetes.io/name"     = local.name
+          "app.kubernetes.io/version"  = local.version
+          instance                     = each.key
+        }
+      }
+      spec {
+        container {
+          image             = "sckmkny/starter-kit-image-nodejs:1.0.0"
+          image_pull_policy = "Always"
+          name              = local.name
+          liveness_probe {
+            http_get {
+              path =  "/" # TODO: HC
+              port = "http"
+            }
+          }
+          port {
+            container_port = 8080
+            name           = "http"
+          }
+          readiness_probe {
+            http_get {
+              path =  "/" # TODO: HC
+              port = "http"
+            }
+          }
+          resources {
+            limits {
+              cpu    = "100m" # TODO: COME FROM
+              memory = "128Mi"
+            }
+            requests {
+              cpu    = "100m"
+              memory = "128Mi"
+            }
+          }
+          security_context {
+            allow_privilege_escalation = false
+            read_only_root_filesystem  = true
+            run_as_non_root            = true
+            run_as_group               = 1000 # ISSUE: https://github.com/hashicorp/terraform-provider-kubernetes/issues/695
+            run_as_user                = 1000 # ISSUE: https://github.com/hashicorp/terraform-provider-kubernetes/issues/695
+          }
+        }
+      }
+    }
+  }
+}
+
+/*
 resource "kubernetes_service" "this" {
   for_each = var.workload
   metadata {
@@ -112,3 +185,4 @@ resource "kubernetes_service" "this" {
     type = "NodePort"
   }
 }
+*/
