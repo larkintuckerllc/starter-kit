@@ -24,21 +24,7 @@
 
 Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit) GitHub repository.
 
-## Update Terraform Configurations' Variables
-
-1. Copy the file *post-cluster/terraform.tfvars.sample* to *post-cluster/terraform.tfvars*
-
-2. Edit the file *post-cluster/terraform.tfvars*
-
-3. Update the value of the *certificate_arn* variable with the public wild card certificate ARN (from prerequisites); for example *arn:aws:acm:[obmitted]:[obmitted]:certificate/[obmitted]*
-
-4. Update the value of the *zone_name* variable with the domain name associated with the host zone (from prerequisites); for example, *example.com*
-
-5. Save the file
-
-**note**: We will later update the other configuration's variables.
-
-## Update Pre-Cluster Configuration Local Variables
+## Update Terraform Pre-Cluster Configuration's Constants
 
 1. Edit the file *pre-cluster/main.tf*
 
@@ -50,7 +36,29 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 5. Save the file
 
-**note**: Unlike the Terraform configurations' variables, once the infrastructure is created the values of these local variables cannot be changed.
+**note**: Unlike the Terraform configurations' variables below, once the infrastructure is created the values of ## Update Terraform Pre-Cluster Configuration's Constants
+
+## Update Terraform Post-Cluster Configuration's Constants
+
+1. Edit the file *post-cluster/main.tf*
+
+2. Update the value of the *identifier* local variable; matching value in *pre-cluster/main.tf*
+
+3. Update the value of the *region* local variable; matching value in *pre-cluster/main.tf*
+
+4. Save the file
+
+## Update Terraform Post-Cluster Configurations' Variables
+
+1. Edit the file *post-cluster/terraform.tfvars*
+
+2. Update the value of the *certificate_arn* variable with the public wild card certificate ARN (from prerequisites); for example *arn:aws:acm:[obmitted]:[obmitted]:certificate/[obmitted]*
+
+3. Update the value of the *zone_name* variable with the domain name associated with the host zone (from prerequisites); for example, *example.com*
+
+4. Save the file
+
+**note**: We will later update the other configuration's variables.
 
 ## Create Pre-Cluster Infrastructure
 
