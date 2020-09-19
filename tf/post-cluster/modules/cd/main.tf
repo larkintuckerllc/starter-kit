@@ -22,7 +22,7 @@ data "aws_caller_identity" "this" {}
 # CODEBUILD ROLE
 
 resource "aws_iam_role" "codebuild" {
-  for_each           = var.workloads
+  for_each           = var.workload
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -46,7 +46,7 @@ EOF
 #  AWS AUTH CONFIGMAP (MUST BE IMPORTED)
 
 resource "kubernetes_config_map" "this" {
-  data = length(var.workloads) == 0 ? {
+  data = length(var.workload) == 0 ? {
     mapRoles = local.config_map_common
   } : {
     mapRoles = join("", [

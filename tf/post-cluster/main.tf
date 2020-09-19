@@ -33,7 +33,12 @@ data "aws_eks_cluster_auth" "this" {
 module "cd" {
   source     = "./modules/cd"
   identifier = local.identifier
-  workloads  = var.workloads
+  workload   = var.workload
+}
+
+module "workloads" {
+  source   = "./modules/workloads"
+  workload = var.workload
 }
 
 /*
@@ -50,10 +55,5 @@ module "ingress" {
   certificate_arn = var.certificate_arn
   webs            = var.webs
   zone_name       = var.zone_name
-}
-
-module "webs" {
-  source = "./modules/webs"
-  webs   = var.webs
 }
 */

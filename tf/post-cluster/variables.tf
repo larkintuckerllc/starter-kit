@@ -2,7 +2,7 @@ variable "certificate_arn" {
   type = string
 }
 
-variable "workloads" {
+variable "workload" {
   type = map(object({
     external = bool
   }))
