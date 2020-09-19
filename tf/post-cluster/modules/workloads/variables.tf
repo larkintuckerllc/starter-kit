@@ -4,7 +4,9 @@ variable "identifier" {
 
 variable "workload" {
   type = map(object({
-    external       = bool
-    ignore_changes = bool
+    destroy              = bool
+    external             = bool
+    placeholder_image    = bool
+    placeholder_replicas = number
   }))
 }
