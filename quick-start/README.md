@@ -86,6 +86,18 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 1. From the command-line in the *post-cluster* folder, execute `terraform init`
 
-## TODO
+## Import AWS Auth ConfigMap
 
-`terraform import module.cd.kubernetes_config_map.this kube-system/aws-auth`
+1. From the command-line in the *post-cluster* folder, execute `terraform import module.cd.kubernetes_config_map.this kube-system/aws-auth`
+
+## Re-Authenticate Kubernetes Provider
+
+1. Edit the file *post-cluster/main.tf*
+
+2. Comment the *kubernetes* provider block labeled with *FOR IMPORT ONLY*
+
+3. Uncomment  the *kubernetes* provider block labeled with *FOR POST-IMPORT ONLY*
+
+**note**: The Terraform *import* command does not support variables in provider blocks
+
+## TODO

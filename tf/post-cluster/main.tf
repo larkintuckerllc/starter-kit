@@ -7,18 +7,20 @@ provider "aws" {
   region = local.region
 }
 
-provider "kubernetes" {
+# TODO: UNCOMMENT
+/*
+provider "kubernetes" { # FOR IMPORT ONLY
   config_context = "arn:aws:eks:us-east-1:143287522423:cluster/starter-kit" # TODO: use [replace]
 }
+*/
 
-/*
-provider "kubernetes" {
+# TODO: COMMENT
+provider "kubernetes" { # FOR POST-IMPORT ONLY
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
   host                   = data.aws_eks_cluster.this.endpoint
   load_config_file       = false
   token                  = data.aws_eks_cluster_auth.this.token
 }
-*/
 
 data "aws_eks_cluster" "this" {
   name = local.identifier
