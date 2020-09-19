@@ -48,12 +48,50 @@ Inbound:
 
 | Rule | Type        | Source      | Allow/Deny |
 | ---- | ----------- | ----------- | ---------- |
-| 100  | ALL Traffic | 0.0.0.0/0   | ALLOW      |
-| *    | ALL Traffic | 0.0.0.0/0   | DENY       |
+| 100  | All Traffic | 0.0.0.0/0   | ALLOW      |
+| *    | All Traffic | 0.0.0.0/0   | DENY       |
 
 Outbound:
 
 | Rule | Type        | Destination | Allow/Deny |
 | ---- | ----------- | ----------- | ---------- |
-| 100  | ALL Traffic | 0.0.0.0/0   | ALLOW      |
-| *    | ALL Traffic | 0.0.0.0/0   | DENY       |
+| 100  | All Traffic | 0.0.0.0/0   | ALLOW      |
+| *    | All Traffic | 0.0.0.0/0   | DENY       |
+
+## Amazon Elastic Kubernetes Service (EKS)
+
+The cluster infrastructure includes:
+
+* EKS Kubernetes Control Plane (CP)
+
+* Node Group (NG); backed by an EC2 auto scaling group and EC2 launch template
+
+* Nodes (ND); the managed EC2 instances provided by the node group
+
+* Network Interfaces (NI); in addition to the network interfaces associated with the EC2 instances there are two addition network interfaces. Based on the security group configuration (below), these network interfaces appear to enable the control plane to communicate with the nodes
+
+**note**: While unexpected, one of the two additional network interfaces appeared in a public subnet; not sure why.
+
+* Security Group (orange); EKS creates a security group:
+
+Inbound:
+
+| Type        | Source    |
+| ----------- | --------- |
+| All Traffic | orange SG |
+
+Outbound:
+
+| Type        | Destination |
+| ----------- | ----------- |
+| All Traffic | 0.0.0.0/0   |
+
+![cluster](cluster.png)
+
+The cluster infrastructure also includes:
+
+* Cluster IAM Role; provides EKS permissions
+
+* Node Instance IAM Role; provides Nodes permissions
+
+* IAM OpenID Connect Identify Provider; enables IAM roles for service accounts

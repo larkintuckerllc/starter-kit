@@ -98,7 +98,7 @@ resource "aws_eks_node_group" "this" {
   }
 }
 
-# IAM ROLES FOR SERVICE ACCOUNTS
+# IAM OPENID CONNECT IDENTITY PROVIDER
 
 data "tls_certificate" "this" {
   url = "${aws_eks_cluster.this.identity.0.oidc.0.issuer}"
