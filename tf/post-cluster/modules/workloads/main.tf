@@ -3,7 +3,6 @@ locals {
   version  = "0.1.0"
 }
 
-/*
 resource "kubernetes_deployment" "this" {
   for_each = var.workload
   lifecycle {
@@ -18,7 +17,7 @@ resource "kubernetes_deployment" "this" {
     }
   }
   spec {
-    replicas = 1
+    replicas = 1 # TODO: REPLICAS
     selector {
       match_labels = {
         instance = each.key
@@ -40,7 +39,7 @@ resource "kubernetes_deployment" "this" {
           name              = local.name
           liveness_probe {
             http_get {
-              path =  "/"
+              path =  "/" # TODO: HC
               port = "http"
             }
           }
@@ -50,13 +49,13 @@ resource "kubernetes_deployment" "this" {
           }
           readiness_probe {
             http_get {
-              path =  "/"
+              path =  "/" # TODO: HC
               port = "http"
             }
           }
           resources {
             limits {
-              cpu    = "100m"
+              cpu    = "100m" # TODO: COME FROM
               memory = "128Mi"
             }
             requests {
@@ -77,9 +76,8 @@ resource "kubernetes_deployment" "this" {
   }
 }
 
-/*
 resource "kubernetes_service" "this" {
-  for_each = toset( var.webs )
+  for_each = var.workload
   metadata {
     name     = each.key
     labels   = {
@@ -99,4 +97,3 @@ resource "kubernetes_service" "this" {
     type = "NodePort"
   }
 }
-*/
