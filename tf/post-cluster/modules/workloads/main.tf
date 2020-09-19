@@ -54,7 +54,7 @@ resource "kubernetes_deployment" "ignore_changes" {
           name              = local.name
           liveness_probe {
             http_get {
-              path =  "/" # TODO: HC
+              path =  each.value["liveness_probe_path"]
               port = "http"
             }
           }
@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "ignore_changes" {
           }
           readiness_probe {
             http_get {
-              path =  "/" # TODO: HC
+              path =  each.value["readiness_probe_path"]
               port = "http"
             }
           }
