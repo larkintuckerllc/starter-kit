@@ -3,6 +3,21 @@ locals {
   version  = "0.1.0"
 }
 
+# ECR
+
+resource "aws_ecr_repository" "this" {
+  for_each = var.workload
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  name = "${var.identifier}-${each.key}"
+  tags = {
+    Infrastructure = var.identifier
+  }
+}
+
+# DEPLOYMENT
+
 resource "kubernetes_deployment" "this" {
   for_each = var.workload
   lifecycle {

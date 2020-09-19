@@ -4,7 +4,8 @@ variable "certificate_arn" {
 
 variable "workload" {
   type = map(object({
-    external = bool
+    external       = bool
+    ignore_changes = bool
   }))
 }
 

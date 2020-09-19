@@ -37,8 +37,9 @@ module "cd" {
 }
 
 module "workloads" {
-  source   = "./modules/workloads"
-  workload = var.workload
+  source     = "./modules/workloads"
+  identifier = local.identifier
+  workload   = var.workload
 }
 
 /*
