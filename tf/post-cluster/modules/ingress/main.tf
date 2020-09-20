@@ -9,16 +9,18 @@ data "aws_route53_zone" "this" {
 }
 
 data "aws_lb" "this" {
+  count = length({for key, workload in var.workload : key => workload if workload["external"]}) == 0 ? 0 : 1
   depends_on = [
     kubernetes_ingress.this
   ]
-  name = regex("^([^-]+-[^-]+-[^-]+-[^-]+)", kubernetes_ingress.this.load_balancer_ingress[0].hostname)[0]
+  name = regex("^([^-]+-[^-]+-[^-]+-[^-]+)", kubernetes_ingress.this[0].load_balancer_ingress[0].hostname)[0]
 }
 
 # INGRESS
 # ISSUE: DESTROYING INGRESS LEAVES A STRAY SECURITY GROUP IN VPC; PREVENTS DESTROYING VPC
 
 resource "kubernetes_ingress" "this" {
+  count = length({for key, workload in var.workload : key => workload if workload["external"]}) == 0 ? 0 : 1
   metadata {
     annotations = {
       "alb.ingress.kubernetes.io/actions.ssl-redirect" = "{\"Type\": \"redirect\", \"RedirectConfig\": { \"Protocol\": \"HTTPS\", \"Port\": \"443\", \"StatusCode\": \"HTTP_301\"}}"
@@ -66,8 +68,8 @@ resource "kubernetes_ingress" "this" {
 resource "aws_route53_record" "web" {
   for_each = {for key, workload in var.workload : key => workload if workload["external"]}
   alias {
-    name                   = data.aws_lb.this.dns_name
-    zone_id                = data.aws_lb.this.zone_id
+    name                   = data.aws_lb.this[0].dns_name
+    zone_id                = data.aws_lb.this[0].zone_id
     evaluate_target_health = true
   }
   name    = "${each.key}.${var.zone_name}"
