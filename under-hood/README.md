@@ -95,3 +95,13 @@ The cluster infrastructure also includes:
 * Node Instance IAM Role; provides Nodes permissions
 
 * IAM OpenID Connect Identify Provider; enables IAM roles for service accounts
+
+## Continuous Integration (Before Workloads)
+
+The continuous integration infrastructure includes:
+
+* S3 Bucket (BK); storing CodePipeline artifacts
+
+![CD](cd.png)
+
+## TODO
