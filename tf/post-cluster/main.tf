@@ -38,7 +38,6 @@ module "cd" {
 
 module "workloads" {
   source     = "./modules/workloads"
-  identifier = local.identifier
   workload   = var.workload
 }
 
