@@ -30,19 +30,11 @@ data "aws_eks_cluster_auth" "this" {
   name = data.aws_eks_cluster.this.name
 }
 
-module "cd" {
-  source      = "./modules/cd"
-  cluster_arn = data.aws_eks_cluster.this.arn
-  identifier  = local.identifier
-  workload    = var.workload
-}
-
 module "workloads" {
-  source     = "./modules/workloads"
-  workload   = var.workload
+  source   = "./modules/workloads"
+  workload = var.workload
 }
 
-/*
 module "alb_ingress_controller" {
   k8s_cluster_name = data.aws_eks_cluster.this.name
   k8s_cluster_type = "eks"
@@ -54,7 +46,13 @@ module "alb_ingress_controller" {
 module "ingress" {
   source          = "./modules/ingress"
   certificate_arn = var.certificate_arn
-  webs            = var.webs
+  workload        = var.workload
   zone_name       = var.zone_name
 }
-*/
+
+module "cd" {
+  source      = "./modules/cd"
+  cluster_arn = data.aws_eks_cluster.this.arn
+  identifier  = local.identifier
+  workload    = var.workload
+}
