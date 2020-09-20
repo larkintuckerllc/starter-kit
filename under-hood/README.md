@@ -166,6 +166,24 @@ Each workload infrastructure includes:
 
 ![workload aws](wl-aws.png)
 
-TODO: CLUSTER DIAGRAM
+The workloads infrastructure also includes:
 
-TODO: ALL OTHER
+* Kubernetes Ingress (ING) in the *default* namespace
+
+Each workload infrastructure also includes:
+
+* Kubernetes Deployment (DPY) in the *default* namespace
+
+* Kubernetes Service (SVC) in the *default* namespace
+
+![workload cluster](wl-cluster.png)
+
+Each workload infrastructure also includes:
+
+* CodePipeline IAM ROLE
+
+* CodeBuild IAM ROLE
+
+* Kubernetes Role in the *default* namespace; allows for CodeBuild IAM Role to update deployment
+
+* Kubernetes RoleBinding in the *default* namespace; allows for CodeBuild IAM Role to update deployment
