@@ -11,6 +11,16 @@ workload        = {
     requests_cpu         = "100m"
     requests_memory      = "128Mi"
   }
+  sample-internal = {
+    external             = false
+    limits_cpu           = "100m"
+    limits_memory        = "128Mi"
+    liveness_probe_path  = "/"
+    readiness_probe_path = "/"
+    replicas             = 1
+    requests_cpu         = "100m"
+    requests_memory      = "128Mi"
+  }
 }
 # workload        = {}
 zone_name       = "todosrus.com" # TODO: use [replace]
