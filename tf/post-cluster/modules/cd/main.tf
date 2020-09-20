@@ -26,7 +26,7 @@ data "aws_caller_identity" "this" {}
 resource "aws_s3_bucket" "this" {
   bucket = "${var.identifier}-codepipeline-${data.aws_region.this.name}"
   tags = {
-    Project = var.identifier
+    Infrastructure = var.identifier
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_codecommit_repository" "this" {
   for_each = var.workload
   repository_name = "${var.identifier}-${each.key}"
   tags = {
-    Project = var.identifier
+    Infrastructure = var.identifier
   }
 }
 
@@ -235,5 +235,80 @@ resource "kubernetes_role_binding" "this" {
     kind      = "User"
     name      = aws_iam_role.codebuild[each.key].name
     api_group = "rbac.authorization.k8s.io"
+  }
+}
+
+# CODEBUILD PROJECT
+
+resource "aws_codebuild_project" "this" {
+  for_each = var.workload
+  cache {
+    type  = "LOCAL"
+    modes = ["LOCAL_DOCKER_LAYER_CACHE"] 
+  }
+  environment {
+    compute_type    = "BUILD_GENERAL1_SMALL"
+    image           = "aws/codebuild/standard:4.0"
+    privileged_mode = true
+    type            = "LINUX_CONTAINER"
+    environment_variable {
+      name  = "DOCKERHUB_PASSWORD"
+      type  = "PARAMETER_STORE"
+      value = "dockerhub_password"
+    }
+    environment_variable {
+      name  = "DOCKERHUB_USERNAME"
+      type  = "PARAMETER_STORE"
+      value = "dockerhub_username"
+    }
+  }
+  name         = "${var.identifier}-${each.key}"
+  service_role = aws_iam_role.codebuild[each.key].arn
+  artifacts {
+    type = "NO_ARTIFACTS"
+  }
+  source {
+    buildspec  = <<EOF
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - export VERSION=$(node -p "require('./package.json').version")
+      - |
+          cat <<EOT > .dockerignore
+          .dockerignore
+          .git
+          .gitignore
+          Dockerfile
+          EOT
+      - |
+          cat <<EOT > Dockerfile
+          FROM node:12.18.2
+          WORKDIR /usr/src/app
+          COPY package*.json ./
+          RUN npm install
+          COPY . .
+          EXPOSE 8080
+          USER 1000:1000
+          ENV PORT=8080
+          CMD [ "npm", "start" ]
+          EOT
+  build:
+    commands:
+      - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
+      - docker build -t image:latest .
+      - docker tag image:latest ${aws_ecr_repository.this[each.key].repository_url}:$VERSION
+  post_build:
+    commands:
+      - $(aws ecr get-login --no-include-email --region ${data.aws_region.this.name})
+      - docker push ${aws_ecr_repository.this[each.key].repository_url}:$VERSION
+      - aws eks --region ${data.aws_region.this.name} update-kubeconfig --name ${var.identifier}
+      - kubectl set image deployment/${each.key} ${local.name}=${aws_ecr_repository.this[each.key].repository_url}:$VERSION
+    EOF
+    location   = aws_codecommit_repository.this[each.key].clone_url_http
+    type       = "CODECOMMIT"
+  }
+  tags = {
+    Infrastructure = var.identifier
   }
 }
