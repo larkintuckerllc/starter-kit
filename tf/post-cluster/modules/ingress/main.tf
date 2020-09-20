@@ -36,7 +36,7 @@ resource "kubernetes_ingress" "this" {
   }
   spec {
     dynamic "rule" {
-      for_each = var.workload
+      for_each = {for key, workload in var.workload : key => workload if workload["external"]}
       content {
         host = "${rule.key}.${var.zone_name}"
         http {
@@ -64,7 +64,7 @@ resource "kubernetes_ingress" "this" {
 # DNS A RECORD
 
 resource "aws_route53_record" "web" {
-  for_each = var.workload
+  for_each = {for key, workload in var.workload : key => workload if workload["external"]}
   alias {
     name                   = data.aws_lb.this.dns_name
     zone_id                = data.aws_lb.this.zone_id
