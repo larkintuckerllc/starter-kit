@@ -1,11 +1,11 @@
 locals {
-    config_map_common = <<EOF
+  config_map_common = <<EOF
 - groups:
   - system:bootstrappers
   - system:nodes
   rolearn: arn:aws:iam::${data.aws_caller_identity.this.account_id}:role/${var.identifier}-node-instance
   username: system:node:{{EC2PrivateDNSName}}
-    EOF
+  EOF
   config_map_workloads = join("", [
     for role in aws_iam_role.codebuild:
     <<EOF
@@ -13,6 +13,8 @@ locals {
   username: ${role.name}
     EOF
   ])
+  name     = "workload"
+  version  = "0.1.0"
 }
 
 data "aws_region" "this" {}
@@ -177,7 +179,7 @@ resource "aws_iam_role_policy" "codebuild" {
   role = aws_iam_role.codebuild[each.key].name
 }
 
-#  AWS AUTH CONFIGMAP FOR CODEBUILD (MUST BE IMPORTED)
+# CODEBUILD AWS AUTH CONFIGMAP (MUST BE IMPORTED)
 
 resource "kubernetes_config_map" "this" {
   data = length(var.workload) == 0 ? {
@@ -191,5 +193,47 @@ resource "kubernetes_config_map" "this" {
   metadata {
     name      = "aws-auth"
     namespace = "kube-system"
+  }
+}
+
+# CODEBUILD K8S RBAC
+
+resource "kubernetes_role" "this" {
+  for_each = var.workload
+  metadata {
+    name = "${each.key}-codebuild"
+    labels = {
+      "app.kubernetes.io/instance" = each.key
+      "app.kubernetes.io/name"     = local.name
+      "app.kubernetes.io/version"  = local.version
+    }
+  }
+  rule {
+    api_groups     = ["apps"]
+    resources      = ["deployments"]
+    resource_names = [each.key]
+    verbs          = ["get","patch", "update"]
+  }
+}
+
+resource "kubernetes_role_binding" "this" {
+  for_each = var.workload
+  metadata {
+    name = "${each.key}-codebuild"
+    labels = {
+      "app.kubernetes.io/instance" = each.key
+      "app.kubernetes.io/name"     = local.name
+      "app.kubernetes.io/version"  = local.version
+    }
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "Role"
+    name      = "${each.key}-codebuild"
+  }
+  subject {
+    kind      = "User"
+    name      = aws_iam_role.codebuild[each.key].name
+    api_group = "rbac.authorization.k8s.io"
   }
 }
