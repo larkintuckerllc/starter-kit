@@ -133,4 +133,40 @@ workload        = {
 
 1. From a browser, navigate to sample.[replace]; replacing with domain name associated with the host zone (from above), e.g., `sample.example.com`
 
-## TODO
+## Setup SSH Connections to AWS CodeCommit
+
+1. [Setup steps for SSH connections to AWS CodeCommit repositories on Linux, macOS, or Unix](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-ssh-unixes.html)
+
+**note:** Do not clone repository.
+
+**note:** For Windows use [Setup steps for SSH connections to AWS CodeCommit repositories on Windows](https://docs.aws.amazon.com/codecommit/latest/userguide/setting-up-ssh-windows.html)
+
+## Download and Initialize Sample Image Code
+
+1. Download sample image code; [Starter Kit Image Node.js](https://github.com/larkintuckerllc/starter-kit-image-nodejs)
+
+2. From the downloaded folder, execute `git init`
+
+3. From the downloaded folder, execute `git remote add aws [replace]`; replacing with the *clone_url_ssh* copied from above
+
+**note**: By using the remote *aws*, one can continue to use *origin* for their own GIT repository.
+
+## Update the Sample Image Code
+
+1. In the downloaded folder, edit file *index.js*
+
+2. Update the line *res.send('Hello World!');*; replacing the string *Hello World* as you please
+
+3. Save the file
+
+4. From the downloaded folder, execute `git add -A`
+
+5. From the downloaded folder, execute `git commit -m "first commit"`
+
+6. From the download folder, execute `git push aws master`
+
+## Verify Updated Sample Workload
+
+1. From a browser, navigate to sample.[replace]; replacing with domain name associated with the host zone (from above), e.g., `sample.example.com`
+
+**note:** It will take a few minutes for the update to propogate.
