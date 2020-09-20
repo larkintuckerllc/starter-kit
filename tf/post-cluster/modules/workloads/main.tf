@@ -96,6 +96,6 @@ resource "kubernetes_service" "this" {
     selector = {
       instance = each.key
     }
-    type = "NodePort"
+    type = each.value["external"] ? "NodePort" : "Service"
   }
 }
