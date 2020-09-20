@@ -68,7 +68,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 ## Access Kubernetes Cluster
 
-1. From the commmand-line, execute `aws eks --region [replace] update-kubeconfig --name [replace]`; replace with region, e.g., *us-east-1*, and identifier, e.g., *starter-kit*
+1. From the commmand-line, execute `aws eks update-kubeconfig --region [replace] --name [replace]`; replace with region, e.g., *us-east-2*, and identifier, e.g., *starter-kit*
 
 2. From the command-line, execute `kubectl get nodes` to confirm access to Kubernetes Cluster
 

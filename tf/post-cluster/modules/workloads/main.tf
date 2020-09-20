@@ -18,10 +18,10 @@ resource "aws_ecr_repository" "this" {
 
 # DEPLOYMENT
 
-resource "kubernetes_deployment" "ignore_changes" {
-  for_each = {for key, workload in var.workload : key => workload if !workload["destroy"]}
+resource "kubernetes_deployment" "this" {
+  for_each = var.workload
   lifecycle {
-    ignore_changes = all
+    ignore_changes = [spec[0].template[0].spec[0].container[0].image]
   }
   metadata {
     name = each.key
@@ -32,7 +32,7 @@ resource "kubernetes_deployment" "ignore_changes" {
     }
   }
   spec {
-    replicas = each.value["placeholder_replicas"]
+    replicas = each.value["replicas"]
     selector {
       match_labels = {
         instance = each.key
@@ -49,7 +49,7 @@ resource "kubernetes_deployment" "ignore_changes" {
       }
       spec {
         container {
-          image             = each.value["placeholder_image"] ? "sckmkny/starter-kit-image-nodejs:1.0.0" : aws_ecr_repository.this[each.key].repository_url
+          image             = "sckmkny/starter-kit-image-nodejs:1.0.0"
           image_pull_policy = "Always"
           name              = local.name
           liveness_probe {
@@ -70,12 +70,12 @@ resource "kubernetes_deployment" "ignore_changes" {
           }
           resources {
             limits {
-              cpu    = "100m" # TODO: COME FROM
-              memory = "128Mi"
+              cpu    = each.value["limits_cpu"]
+              memory = each.value["limits_memory"]
             }
             requests {
-              cpu    = "100m"
-              memory = "128Mi"
+              cpu    = each.value["requests_cpu"]
+              memory = each.value["requests_memory"]
             }
           }
           security_context {
