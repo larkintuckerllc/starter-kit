@@ -312,3 +312,118 @@ phases:
     Infrastructure = var.identifier
   }
 }
+
+# CODEPIPELINE ROLE
+
+resource "aws_iam_role" "codepipeline" {
+  for_each = var.workload
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "codepipeline.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+  EOF
+  name               = "${var.identifier}-${data.aws_region.this.name}-${each.key}-codepipeline"
+  tags = {
+    Infrastructure = var.identifier
+  }
+}
+
+resource "aws_iam_role_policy" "codepipeline" {
+  for_each = var.workload
+  policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "codecommit:CancelUploadArchive",
+                "codecommit:GetBranch",
+                "codecommit:GetCommit",
+                "codecommit:GetUploadArchiveStatus",
+                "codecommit:UploadArchive"
+            ],
+            "Resource": "${aws_codecommit_repository.this[each.key].arn}",
+            "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Resource": [
+                "${aws_s3_bucket.this.arn}",
+                "${aws_s3_bucket.this.arn}/*"
+            ],
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:GetBucketAcl",
+                "s3:GetBucketLocation"
+            ]
+        },
+        {
+            "Action": [
+                "codebuild:BatchGetBuilds",
+                "codebuild:StartBuild",
+                "codebuild:BatchGetBuildBatches",
+                "codebuild:StartBuildBatch"
+            ],
+            "Resource": "${aws_codebuild_project.this[each.key].arn}",
+            "Effect": "Allow"
+        }
+    ]
+}
+  EOF
+  role = aws_iam_role.codepipeline[each.key].name
+}
+
+# CODEPIPELINE PIPELINE
+
+resource "aws_codepipeline" "this" {
+  for_each = var.workload
+  artifact_store {
+    location = aws_s3_bucket.this.bucket
+    type     = "S3"
+  }
+  name     = "${var.identifier}-${each.key}"
+  role_arn = aws_iam_role.codepipeline[each.key].arn
+  stage {
+    action {
+      name             = "Source"
+      category         = "Source"
+      owner            = "AWS"
+      provider         = "CodeCommit"
+      version          = "1"
+      output_artifacts = ["SourceArtifact"]
+      configuration = {
+        RepositoryName = "${var.identifier}-${each.key}"
+        BranchName     = "master"
+      }
+    }
+    name = "Source"
+  }
+  stage {
+    action {
+      name             = "Build"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["SourceArtifact"]
+      version          = "1"
+      configuration = {
+        ProjectName = "${var.identifier}-${each.key}"
+      }
+    }
+    name = "Build"
+  }
+  tags = {
+    Infrastructure = var.identifier
+  } 
+}
