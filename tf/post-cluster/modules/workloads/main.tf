@@ -41,7 +41,7 @@ resource "kubernetes_deployment" "this" {
           name              = local.name
           liveness_probe {
             http_get {
-              path =  each.value["liveness_probe_path"]
+              path = each.value["liveness_probe_path"]
               port = "http"
             }
           }
@@ -51,7 +51,7 @@ resource "kubernetes_deployment" "this" {
           }
           readiness_probe {
             http_get {
-              path =  each.value["readiness_probe_path"]
+              path = each.value["readiness_probe_path"]
               port = "http"
             }
           }
@@ -78,7 +78,6 @@ resource "kubernetes_deployment" "this" {
   }
 }
 
-/*
 resource "kubernetes_service" "this" {
   for_each = var.workload
   metadata {
@@ -100,4 +99,3 @@ resource "kubernetes_service" "this" {
     type = "NodePort"
   }
 }
-*/
