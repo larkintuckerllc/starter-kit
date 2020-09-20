@@ -20,6 +20,8 @@
 
 - Workstation with Kubernetes CLI, *kubectl*, version 1.17 installed; [Install and Set Up kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
+- Workstation with GIT CLI [1.5 Getting Started - Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
 ## Download Terraform Configurations
 
 Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit) GitHub repository.
@@ -103,3 +105,32 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 ## Create Post-Cluster Infrastructure
 
 1. From the command-line in the *post-cluster* folder, execute `terraform apply`
+
+## Create a Sample Workload
+
+1. Edit the file *post-cluster/terraform.tfvars*
+
+2. Replace the *workload* variable with a sample workload (see below)
+
+3. From the command-line in the *post-cluster* folder, execute `terraform apply`; copy output
+
+```hcl
+workload        = {
+  sample = {
+    external             = true
+    limits_cpu           = "100m"
+    limits_memory        = "128Mi"
+    liveness_probe_path  = "/"
+    readiness_probe_path = "/"
+    replicas             = 1
+    requests_cpu         = "100m"
+    requests_memory      = "128Mi"
+  }
+}
+```
+
+## Verify Sample Workload
+
+1. From a browser, navigate to sample.[replace]; replacing with domain name associated with the host zone (from above), e.g., `sample.example.com`
+
+## TODO
