@@ -96,7 +96,7 @@ The cluster infrastructure also includes:
 
 * IAM OpenID Connect Identify Provider; enables IAM roles for service accounts
 
-## Continuous Integration (Before Workloads)
+## Continuous Integration (without Workloads)
 
 The continuous integration infrastructure includes:
 
@@ -104,7 +104,7 @@ The continuous integration infrastructure includes:
 
 ![CD](cd.png)
 
-## ALB Ingress Controller
+## ALB Ingress Controller (without Workloads)
 
 The ALB Ingress controller includes [alb-ingress-controller resources](https://registry.terraform.io/modules/iplabs/alb-ingress-controller/kubernetes/3.0.2?tab=resources).
 
@@ -115,3 +115,15 @@ The ALB Ingress controller includes [alb-ingress-controller resources](https://r
 Elastic Kubernetes Service (EKS) creates a ConfigMap, *aws-auth*, in the *kube-system* namespace.
 
 [Managing users or IAM roles for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html)
+
+## Continuous Integration (with Workloads)
+
+TODO
+
+## ALB Ingress Controller (with Workloads)
+
+TODO
+
+## Workloads
+
+TODO
