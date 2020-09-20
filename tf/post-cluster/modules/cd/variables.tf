@@ -1,3 +1,7 @@
+variable "cluster_arn" {
+  type = string
+}
+
 variable "identifier" {
   type = string
 }

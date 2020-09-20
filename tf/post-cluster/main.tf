@@ -31,9 +31,10 @@ data "aws_eks_cluster_auth" "this" {
 }
 
 module "cd" {
-  source     = "./modules/cd"
-  identifier = local.identifier
-  workload   = var.workload
+  source      = "./modules/cd"
+  cluster_arn = data.aws_eks_cluster.this.arn
+  identifier  = local.identifier
+  workload    = var.workload
 }
 
 module "workloads" {
