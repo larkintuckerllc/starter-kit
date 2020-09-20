@@ -16,6 +16,8 @@ data "aws_lb" "this" {
   name = regex("^([^-]+-[^-]+-[^-]+-[^-]+)", kubernetes_ingress.this[0].load_balancer_ingress[0].hostname)[0]
 }
 
+# AT LEAST ONE WORKLOAD RESOURCES
+
 # INGRESS
 # ISSUE: DESTROYING INGRESS LEAVES A STRAY SECURITY GROUP IN VPC; PREVENTS DESTROYING VPC
 
@@ -62,6 +64,8 @@ resource "kubernetes_ingress" "this" {
   }
   wait_for_load_balancer = true
 }
+
+# FOR EACH WORKLOAD RESOURCES
 
 # DNS A RECORD
 

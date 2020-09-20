@@ -3,6 +3,8 @@ locals {
   version  = "0.1.0"
 }
 
+# FOR EACH WORKLOAD RESOURCES
+
 # DEPLOYMENT
 
 resource "kubernetes_deployment" "this" {
