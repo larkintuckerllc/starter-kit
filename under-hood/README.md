@@ -96,7 +96,7 @@ The cluster infrastructure also includes:
 
 * IAM OpenID Connect Identify Provider; enables IAM roles for service accounts
 
-## Continuous Integration (without Workloads)
+## Continuous Integration
 
 The continuous integration infrastructure includes:
 
@@ -104,7 +104,7 @@ The continuous integration infrastructure includes:
 
 ![CD](cd.png)
 
-## ALB Ingress Controller (without Workloads)
+## ALB Ingress Controller
 
 The ALB Ingress controller includes [alb-ingress-controller resources](https://registry.terraform.io/modules/iplabs/alb-ingress-controller/kubernetes/3.0.2?tab=resources).
 
@@ -116,14 +116,56 @@ Elastic Kubernetes Service (EKS) creates a ConfigMap, *aws-auth*, in the *kube-s
 
 [Managing users or IAM roles for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html)
 
-## Continuous Integration (with Workloads)
-
-TODO
-
-## ALB Ingress Controller (with Workloads)
-
-TODO
-
 ## Workloads
 
-TODO
+The workloads infrastructure includes:
+
+* Application Load Balancer (ALB); created by ALB ingress controller
+
+* Security Group (purple); ALB ingress controller creates a security group:
+
+Inbound:
+
+| Type        | Source    |
+| ----------- | --------- |
+| HTTP        | 0.0.0.0/0 |
+| HTTPS       | 0.0.0.0/0 |
+
+Outbound:
+
+| Type        | Destination |
+| ----------- | ----------- |
+| All Traffic | 0.0.0.0/0   |
+
+* Updated Security Group (orange); ALB ingress controller updates a security group:
+
+Inbound:
+
+| Type        | Source    |
+| ----------- | --------- |
+| All Traffic | orange SG |
+| All TCP     | purple SG |
+
+Outbound:
+
+| Type        | Destination |
+| ----------- | ----------- |
+| All Traffic | 0.0.0.0/0   |
+
+Each workload infrastructure includes:
+
+* CodeCommit Repository (CRP)
+
+* Elastic Container Repository (ERP)
+
+* CodeBuild Project (PRJ)
+
+* CodePipeline Pipeline (PL)
+
+* Route 53 DNS Zone A Record (A)
+
+![workload aws](wl-aws.png)
+
+TODO: CLUSTER DIAGRAM
+
+TODO: ALL OTHER
