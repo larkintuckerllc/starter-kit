@@ -12,7 +12,7 @@ data "aws_lb" "this" {
   depends_on = [
     kubernetes_ingress.this
   ]
-  name =  regex("^([^-]+-[^-]+-[^-]+-[^-]+)", kubernetes_ingress.this.load_balancer_ingress[0].hostname)[0]
+  name = regex("^([^-]+-[^-]+-[^-]+-[^-]+)", kubernetes_ingress.this.load_balancer_ingress[0].hostname)[0]
 }
 
 # INGRESS
