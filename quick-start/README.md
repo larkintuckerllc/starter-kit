@@ -100,4 +100,6 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 **note**: The Terraform *import* command does not support variables in provider blocks
 
-## TODO
+## Create Post-Cluster Infrastructure
+
+1. From the command-line in the *post-cluster* folder, execute `terraform apply`
