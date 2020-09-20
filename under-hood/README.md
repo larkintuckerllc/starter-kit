@@ -110,4 +110,8 @@ The ALB Ingress controller includes [alb-ingress-controller resources](https://r
 
 ![ALB](alb.png)
 
-## TODO: CONFIGMAP
+## AWS Auth ConfigMap
+
+Elastic Kubernetes Service (EKS) creates a ConfigMap, *aws-auth*, in the *kube-system* namespace.
+
+[Managing users or IAM roles for your cluster](https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html)
