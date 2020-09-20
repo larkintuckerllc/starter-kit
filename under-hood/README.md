@@ -104,4 +104,10 @@ The continuous integration infrastructure includes:
 
 ![CD](cd.png)
 
-## TODO
+## ALB Ingress Controller
+
+The ALB Ingress controller includes [alb-ingress-controller resources](https://registry.terraform.io/modules/iplabs/alb-ingress-controller/kubernetes/3.0.2?tab=resources).
+
+![ALB](alb.png)
+
+## TODO: CONFIGMAP
