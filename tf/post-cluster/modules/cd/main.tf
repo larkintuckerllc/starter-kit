@@ -59,3 +59,18 @@ resource "kubernetes_config_map" "this" {
     namespace = "kube-system"
   }
 }
+
+/*
+# ECR
+
+resource "aws_ecr_repository" "this" {
+  for_each = var.workload
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+  name = "${var.identifier}-${each.key}"
+  tags = {
+    Infrastructure = var.identifier
+  }
+}
+*/
