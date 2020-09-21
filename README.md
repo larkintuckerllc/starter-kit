@@ -2,9 +2,9 @@
 
 A starting point for building out a highly available Amazon Elastic Kubernetes Service (EKS) cluster supporting per-workload continous deployments.
 
-- [Quick Start](quick-start): Step-by-step walk-through of using the Starter Kit
+- [Quick Start (0.1.0)](quick-start-0-1-0): Step-by-step walk-through of using the Starter Kit
 
-- [Documentation](documentation): Additional details on using the Starter Kit
+- [Documentation (0.1.0)](documentation-0-1-0): Additional details on using the Starter Kit
 
 - [Monthly Cost Details](cost-details): Breakdown of AWS costs in running the resources created by the Starter Kit
 
