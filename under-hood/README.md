@@ -1,48 +1,54 @@
 # Under the Hood
 
+## System Manager Parameters
+
+- *dockerhub-username*: DockerHub username
+
+- *dockerhub-password*: DockerHub password
+
 ## Amazon Virtual Private Cloud (VPC)
 
 The Amazon infrastructure includes:
 
-* Region
+- Region
 
-* Availability Zone (AZ) x 2
+- Availability Zone (AZ) x 2
 
 The VPC infrastructure includes:
 
-* VPC: 172.16.0.0/16
+- VPC: 172.16.0.0/16
 
-* Subnet (SN) Private: 172.16.128.0/18
+- Subnet (SN) Private: 172.16.128.0/18
 
-* Subnet (SN) Private: 172.16.192.0/18
+- Subnet (SN) Private: 172.16.192.0/18
 
-* Subnet (SN) Public: 172.16.0.0/24
+- Subnet (SN) Public: 172.16.0.0/24
 
-* Subnet (SN) Public: 172.16.1.0/24
+- Subnet (SN) Public: 172.16.1.0/24
 
-* Internet Gateway (IG)
+- Internet Gateway (IG)
 
-* NAT Gateway (NG) x 2
+- NAT Gateway (NG) x 2
 
 ![vpc](vpc.png)
 
 The VPC infrastructure also includes:
 
-* Route Table Private x 2 (associated with subnet private)
+- Route Table Private x 2 (associated with subnet private)
 
 | Destination   | Target |
 | ------------- | ------ |
 | 172.16.0.0/16 | local  |
 | 0.0.0.0/0     | NG     |
 
-* Route Table Public (associated with subnet public x 2)
+- Route Table Public (associated with subnet public x 2)
 
 | Destination   | Target |
 | ------------- | ------ |
 | 172.16.0.0/16 | local  |
 | 0.0.0.0/0     | IG     |
 
-* Network Access Control List (associated with subnet private x 2 and subnet public x 2):
+- Network Access Control List (associated with subnet private x 2 and subnet public x 2):
 
 Inbound:
 
@@ -62,17 +68,17 @@ Outbound:
 
 The cluster infrastructure includes:
 
-* EKS Kubernetes Control Plane (CP)
+- EKS Kubernetes Control Plane (CP)
 
-* Node Group (NG); backed by an EC2 auto scaling group and EC2 launch template
+- Node Group (NG); backed by an EC2 auto scaling group and EC2 launch template
 
-* Nodes (ND); the managed EC2 instances provided by the node group
+- Nodes (ND); the managed EC2 instances provided by the node group
 
-* Network Interfaces (NI); in addition to the network interfaces associated with the EC2 instances there are two addition network interfaces. Based on the security group configuration (below), these network interfaces appear to enable the control plane to communicate with the nodes
+- Network Interfaces (NI); in addition to the network interfaces associated with the EC2 instances there are two addition network interfaces. Based on the security group configuration (below), these network interfaces appear to enable the control plane to communicate with the nodes
 
 **note**: One of the two additional network interfaces appeared in a public subnet; not sure why.
 
-* Security Group (orange); EKS creates a security group:
+- Security Group (orange); EKS creates a security group:
 
 Inbound:
 
@@ -90,17 +96,17 @@ Outbound:
 
 The cluster infrastructure also includes:
 
-* Cluster IAM Role; provides EKS permissions
+- Cluster IAM Role; provides EKS permissions
 
-* Node Instance IAM Role; provides Nodes permissions
+- Node Instance IAM Role; provides Nodes permissions
 
-* IAM OpenID Connect Identify Provider; enables IAM roles for service accounts
+- IAM OpenID Connect Identify Provider; enables IAM roles for service accounts
 
 ## Continuous Integration
 
 The continuous integration infrastructure includes:
 
-* S3 Bucket (BK); storing CodePipeline artifacts
+- S3 Bucket (BK); storing CodePipeline artifacts
 
 ![CD](cd.png)
 
@@ -120,9 +126,9 @@ Elastic Kubernetes Service (EKS) creates a ConfigMap, *aws-auth*, in the *kube-s
 
 The workloads infrastructure includes:
 
-* Application Load Balancer (ALB); created by ALB ingress controller
+- Application Load Balancer (ALB); created by ALB ingress controller
 
-* Security Group (purple); ALB ingress controller creates a security group:
+- Security Group (purple); ALB ingress controller creates a security group:
 
 Inbound:
 
@@ -137,7 +143,7 @@ Outbound:
 | ----------- | ----------- |
 | All Traffic | 0.0.0.0/0   |
 
-* Updated Security Group (orange); ALB ingress controller updates a security group:
+- Updated Security Group (orange); ALB ingress controller updates a security group:
 
 Inbound:
 
@@ -154,36 +160,36 @@ Outbound:
 
 Each workload infrastructure includes:
 
-* CodeCommit Repository (CRP)
+- CodeCommit Repository (CRP)
 
-* Elastic Container Repository (ERP)
+- Elastic Container Repository (ERP)
 
-* CodeBuild Project (PRJ)
+- CodeBuild Project (PRJ)
 
-* CodePipeline Pipeline (PL)
+- CodePipeline Pipeline (PL)
 
-* Route 53 DNS Zone A Record (A)
+- Route 53 DNS Zone A Record (A)
 
 ![workload aws](wl-aws.png)
 
 The workloads infrastructure also includes:
 
-* Kubernetes Ingress (ING) in the *default* namespace
+- Kubernetes Ingress (ING) in the *default* namespace
 
 Each workload infrastructure also includes:
 
-* Kubernetes Deployment (DPY) in the *default* namespace
+- Kubernetes Deployment (DPY) in the *default* namespace
 
-* Kubernetes Service (SVC) in the *default* namespace
+- Kubernetes Service (SVC) in the *default* namespace
 
 ![workload cluster](wl-cluster.png)
 
 Each workload infrastructure also includes:
 
-* CodePipeline IAM ROLE
+- CodePipeline IAM ROLE
 
-* CodeBuild IAM ROLE
+- CodeBuild IAM ROLE
 
-* Kubernetes Role in the *default* namespace; allows for CodeBuild IAM Role to update deployment
+- Kubernetes Role in the *default* namespace; allows for CodeBuild IAM Role to update deployment
 
-* Kubernetes RoleBinding in the *default* namespace; allows for CodeBuild IAM Role to update deployment
+- Kubernetes RoleBinding in the *default* namespace; allows for CodeBuild IAM Role to update deployment
