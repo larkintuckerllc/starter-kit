@@ -1,7 +1,7 @@
 locals {
   availability_zones = [
     "[replace]", # us-east-1a
-    "[replace]"  # us-east-2b
+    "[replace]"  # us-east-1b
   ]
   identifier          = "[replace]" # starter-kit
   region              = "[replace]"  # us-east-1

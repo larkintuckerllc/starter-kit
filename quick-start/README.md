@@ -46,7 +46,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 5. Save the file
 
-**note**: Unlike the Terraform configurations' variables below, once the infrastructure is created the values of ## Update Terraform Pre-Cluster Configuration's Constants
+**note**: Unlike the Terraform configurations' variables below, once the infrastructure is created the values of constants cannot be changed once the infrastructure is created.
 
 ## Update Terraform Post-Cluster Configuration's Constants
 
