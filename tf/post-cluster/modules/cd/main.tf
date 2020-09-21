@@ -22,6 +22,7 @@ data "aws_region" "this" {}
 data "aws_caller_identity" "this" {}
 
 # CODEPIPELINE BUCKET
+# WHEN DESTORYING WILL FAIL BECAUSE BUCKET IS NOT EMPTY; EMPTY AND RETRY
 
 resource "aws_s3_bucket" "this" {
   bucket = "${var.identifier}-codepipeline-${data.aws_region.this.name}"

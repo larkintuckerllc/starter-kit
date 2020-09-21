@@ -74,7 +74,7 @@ resource "aws_route53_record" "web" {
   alias {
     name                   = data.aws_lb.this[0].dns_name
     zone_id                = data.aws_lb.this[0].zone_id
-    evaluate_target_health = true
+    evaluate_target_health = false
   }
   name    = "${each.key}.${var.zone_name}"
   type    = "A"
