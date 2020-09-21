@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.region
+  region = var.REGION
 }
 
 provider "kubernetes" { # FOR IMPORT ONLY
@@ -16,7 +16,7 @@ provider "kubernetes" { # FOR POST-IMPORT ONLY
 */
 
 data "aws_eks_cluster" "this" {
-  name = var.identifier
+  name = var.IDENTIFIER
 }
 
 data "aws_eks_cluster_auth" "this" {
@@ -46,6 +46,6 @@ module "ingress" {
 module "cd" {
   source      = "./modules/cd"
   cluster_arn = data.aws_eks_cluster.this.arn
-  identifier  = var.identifier
+  identifier  = var.IDENTIFIER
   workload    = var.workload
 }

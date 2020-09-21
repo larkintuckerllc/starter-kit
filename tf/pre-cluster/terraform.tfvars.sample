@@ -1,8 +1,8 @@
 # CONSTANTS
 
-availability_zones = [
+AVAILABILITY_ZONES = [
   "[replace]", # us-east-1a
   "[replace]"  # us-east-1b
 ]
-identifier = "[replace]" # starter-kit
-region     = "[replace]"  # us-east-1
+IDENTIFIER = "[replace]" # starter-kit
+REGION     = "[replace]"  # us-east-1

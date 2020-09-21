@@ -2,11 +2,11 @@ variable "certificate_arn" {
   type = string
 }
 
-variable identifier {
+variable "IDENTIFIER" {
   type = string
 }
 
-variable region {
+variable "REGION" {
   type = string
 }
 

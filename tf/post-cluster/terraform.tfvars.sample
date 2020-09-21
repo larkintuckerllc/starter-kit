@@ -1,7 +1,7 @@
 # CONSTANTS
 
-identifier      = "[replace]" # starter-kit
-region          = "[replace]"  # us-east-1
+IDENTIFIER      = "[replace]" # starter-kit
+REGION          = "[replace]"  # us-east-1
 
 # VARIABLES
 

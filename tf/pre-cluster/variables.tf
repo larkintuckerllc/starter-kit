@@ -1,11 +1,11 @@
-variable availability_zones {
+variable "AVAILABILITY_ZONES" {
   type = list(string)
 }
 
-variable identifier {
+variable "IDENTIFIER" {
   type = string
 }
 
-variable region {
+variable "REGION" {
   type = string
 }
