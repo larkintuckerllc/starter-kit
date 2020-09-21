@@ -1,7 +1,5 @@
 # Quick Start
 
-[![video](img/video.png)](https://youtu.be/yTQMqWMP12s)
-
 ## Prerequisites
 
 - Amazon Web Services (AWS) account; [How do I create and activate a new AWS account?](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/)
