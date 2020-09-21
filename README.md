@@ -2,13 +2,13 @@
 
 TODO
 
-- [Quick Start](quick-start)
+- [Quick Start](quick-start): Step-by-step walk-through of using the Starter Kit
 
-- [Documentation](documentation)
+- [Documentation](documentation): Additional details on using the Starter Kit
 
-- [Monthly Cost Details](cost-details)
+- [Monthly Cost Details](cost-details): Breakdown of AWS costs in running the resources created by the Starter Kit
 
-- [Under the Hood](under-hood)
+- [Under the Hood](under-hood): Explaination of the resources created by the Starter Kit
 
 ## Contributing
 
