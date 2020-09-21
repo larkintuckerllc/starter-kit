@@ -22,6 +22,14 @@
 
 - Workstation with GIT CLI [1.5 Getting Started - Installing Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+## Store DockerHub Credentials
+
+Following the instructions, [Create a Systems Manager parameter (console)](https://docs.aws.amazon.com/systems-manager/latest/userguide/param-create-console.html), create two SecureString parameters.
+
+- *dockerhub-username*: DockerHub username
+
+- *dockerhub-password*: DockerHub password
+
 ## Download Terraform Configurations
 
 Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit) GitHub repository.
