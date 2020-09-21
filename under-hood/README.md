@@ -2,9 +2,9 @@
 
 ## System Manager Parameters
 
-- *dockerhub-username*: DockerHub username
+- *dockerhub_username*: DockerHub username
 
-- *dockerhub-password*: DockerHub password
+- *dockerhub_password*: DockerHub password
 
 ## Amazon Virtual Private Cloud (VPC)
 

@@ -26,9 +26,9 @@
 
 Following the instructions, [Create a Systems Manager parameter (console)](https://docs.aws.amazon.com/systems-manager/latest/userguide/param-create-console.html), create two SecureString parameters.
 
-- *dockerhub-username*: DockerHub username
+- *dockerhub_username*: DockerHub username
 
-- *dockerhub-password*: DockerHub password
+- *dockerhub_password*: DockerHub password
 
 ## Download Terraform Configurations
 
@@ -178,3 +178,21 @@ workload        = {
 1. From a browser, navigate to sample.[replace]; replacing with domain name associated with the host zone (from above), e.g., `sample.example.com`
 
 **note:** It will take a few minutes for the update to propogate.
+
+## Destroy Sample Workload
+
+1. Edit the file *post-cluster/terraform.tfvars*
+
+2. Replace the *workload* variable with `{}`
+
+3. From the command-line in the *post-cluster* folder, execute `terraform apply`
+
+## Destroy Post-Cluster Infrastructure
+
+1. From the command-line in the *post-cluster* folder, execute `terraform destroy`
+
+**note**: The command will fail with not being able to delete a bucket because it not empty.  Login to the AWS console, navigate to S3, and empty the bucket named *[replace]-codepipeline-[replace]*; replacing with identifier and region name. For example *starter-kit-codepipeline-us-east-1*. Then repeat step 1 delete the bucket.
+
+## Destroy Pre-Cluster Infrastructure
+
+1. From the command-line in the *pre-cluster* folder, execute `terraform destroy`
