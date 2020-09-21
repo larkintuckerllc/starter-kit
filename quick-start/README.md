@@ -1,6 +1,6 @@
 # Quick Start
 
-[![video](video.png)](https://youtu.be/yTQMqWMP12s)
+[![video](images/video.png)](https://youtu.be/yTQMqWMP12s)
 
 ## Prerequisites
 
