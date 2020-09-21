@@ -20,6 +20,7 @@ data "aws_lb" "this" {
 
 # INGRESS
 # ISSUE: DESTROYING INGRESS LEAVES A STRAY SECURITY GROUP IN VPC; PREVENTS DESTROYING VPC
+# ISSUE: DESTROYING INGRESS CAN LEAVE BEHIND THE ALB AND TARGET GROUP; PREVENTS DESTORYING PUBLIC SUBNETS
 
 resource "kubernetes_ingress" "this" {
   count = length({for key, workload in var.workload : key => workload if workload["external"]}) == 0 ? 0 : 1
