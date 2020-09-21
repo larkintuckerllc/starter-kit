@@ -32,7 +32,7 @@ Following the instructions, [Create a Systems Manager parameter (console)](https
 
 ## Download Terraform Configurations
 
-Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit) GitHub repository.
+Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit/releases/tag/0.1.0) GitHub repository.
 
 ## Update Terraform Pre-Cluster Configuration's Constants
 
@@ -151,7 +151,7 @@ workload        = {
 
 ## Download and Initialize Sample Image Code
 
-1. Download sample image code; [Starter Kit Image Node.js](https://github.com/larkintuckerllc/starter-kit-image-nodejs)
+1. Download sample image code; [Starter Kit Image Node.js](https://github.com/larkintuckerllc/starter-kit-image-nodejs/releases/tag/1.0.0)
 
 2. From the downloaded folder, execute `git init`
 
