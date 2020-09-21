@@ -30,7 +30,7 @@ The VPC infrastructure includes:
 
 - NAT Gateway (NG) x 2
 
-![vpc](images/vpc.png)
+![vpc](img/vpc.png)
 
 The VPC infrastructure also includes:
 
@@ -92,7 +92,7 @@ Outbound:
 | ----------- | ----------- |
 | All Traffic | 0.0.0.0/0   |
 
-![cluster](images/cluster.png)
+![cluster](img/cluster.png)
 
 The cluster infrastructure also includes:
 
@@ -108,13 +108,13 @@ The continuous integration infrastructure includes:
 
 - S3 Bucket (BK); storing CodePipeline artifacts
 
-![CD](images/cd.png)
+![CD](img/cd.png)
 
 ## ALB Ingress Controller
 
 The ALB Ingress controller includes [alb-ingress-controller resources](https://registry.terraform.io/modules/iplabs/alb-ingress-controller/kubernetes/3.0.2?tab=resources).
 
-![ALB](images/alb.png)
+![ALB](img/alb.png)
 
 ## AWS Auth ConfigMap
 
@@ -170,7 +170,7 @@ Each workload infrastructure includes:
 
 - Route 53 DNS Zone A Record (A)
 
-![workload aws](images/wl-aws.png)
+![workload aws](img/wl-aws.png)
 
 The workloads infrastructure also includes:
 
@@ -182,7 +182,7 @@ Each workload infrastructure also includes:
 
 - Kubernetes Service (SVC) in the *default* namespace
 
-![workload cluster](images/wl-cluster.png)
+![workload cluster](img/wl-cluster.png)
 
 Each workload infrastructure also includes:
 
