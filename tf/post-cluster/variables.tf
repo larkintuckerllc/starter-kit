@@ -2,6 +2,14 @@ variable "certificate_arn" {
   type = string
 }
 
+variable identifier {
+  type = string
+}
+
+variable region {
+  type = string
+}
+
 variable "workload" {
   type = map(object({
     external             = bool

@@ -1,10 +1,5 @@
-locals {
-  identifier = "[replace]" # starter-kit
-  region     = "[replace]" # us-east-1
-}
-
 provider "aws" {
-  region = local.region
+  region = var.region
 }
 
 provider "kubernetes" { # FOR IMPORT ONLY
@@ -21,7 +16,7 @@ provider "kubernetes" { # FOR POST-IMPORT ONLY
 */
 
 data "aws_eks_cluster" "this" {
-  name = local.identifier
+  name = var.identifier
 }
 
 data "aws_eks_cluster_auth" "this" {
@@ -51,6 +46,6 @@ module "ingress" {
 module "cd" {
   source      = "./modules/cd"
   cluster_arn = data.aws_eks_cluster.this.arn
-  identifier  = local.identifier
+  identifier  = var.identifier
   workload    = var.workload
 }

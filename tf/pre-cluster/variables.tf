@@ -6,6 +6,6 @@ variable identifier {
   type = string
 }
 
-variable region{
+variable region {
   type = string
 }
