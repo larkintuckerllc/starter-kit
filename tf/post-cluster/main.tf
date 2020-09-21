@@ -1,26 +1,24 @@
 locals {
-  identifier = "starter-kit" # TODO: use [replace]
-  region     = "us-east-1" # TODO: use [replace]
+  identifier = "[replace]" # starter-kit
+  region     = "[replace]" # us-east-1
 }
 
 provider "aws" {
   region = local.region
 }
 
-# TODO: UNCOMMENT
-/*
 provider "kubernetes" { # FOR IMPORT ONLY
-  config_context = "arn:aws:eks:us-east-1:143287522423:cluster/starter-kit" # TODO: use [replace]
+  config_context = "[replace]" # arn:aws:eks:[obmitted]:[obmitted]:cluster/[obmitted]
 }
-*/
 
-# TODO: COMMENT
+/*
 provider "kubernetes" { # FOR POST-IMPORT ONLY
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
   host                   = data.aws_eks_cluster.this.endpoint
   load_config_file       = false
   token                  = data.aws_eks_cluster_auth.this.token
 }
+*/
 
 data "aws_eks_cluster" "this" {
   name = local.identifier

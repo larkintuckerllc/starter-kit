@@ -1,10 +1,10 @@
 locals {
   availability_zones = [
-    "us-east-1a", # TODO: use [replace]
-    "us-east-1b" # TODO: use [replace]
+    "[replace]", # us-east-1a
+    "[replace]"  # us-east-2b
   ]
-  identifier          = "starter-kit" # TODO: use [replace]
-  region              = "us-east-1" # TODO: use [replace]
+  identifier          = "[replace]" # starter-kit
+  region              = "[replace]"  # us-east-1
 }
 
 provider "aws" {
