@@ -2,7 +2,7 @@
 
 ## Workload Specification
 
-Workloads are defined in the file *post-cluster/terraform.tfvars* under the *workload* attribute, e.g.:
+Workloads are defined in the file *tf/post-cluster/terraform.tfvars* under the *workload* attribute, e.g.:
 
 ```hcl
 workload        = {
