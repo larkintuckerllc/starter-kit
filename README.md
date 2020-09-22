@@ -10,6 +10,8 @@ A starting point for building out a highly available Amazon Elastic Kubernetes S
 
 - [Under the Hood](under-hood): Explaination of the resources created by the Starter Kit
 
+- [Changelog](change-log)
+
 - [Previous Versions](previous-versions)
 
 ## Contributing
