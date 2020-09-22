@@ -1,5 +1,9 @@
 locals {
   name     = "workload"
+  platform_image = {
+    go     = "sckmkny/starter-kit-image-go:1.0.0"
+    nodejs = "sckmkny/starter-kit-image-nodejs:1.0.0"
+  }
 }
 
 # FOR EACH WORKLOAD RESOURCES
@@ -37,7 +41,7 @@ resource "kubernetes_deployment" "this" {
       }
       spec {
         container {
-          image             = "sckmkny/starter-kit-image-nodejs:1.0.0"
+          image             = local.platform_image[each.value["platform"]]
           image_pull_policy = "Always"
           name              = local.name
           liveness_probe {

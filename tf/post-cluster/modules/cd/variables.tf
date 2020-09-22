@@ -16,6 +16,7 @@ variable "workload" {
     limits_cpu           = string
     limits_memory        = string
     liveness_probe_path  = string
+    platform             = string
     readiness_probe_path = string
     replicas             = number
     requests_cpu         = string

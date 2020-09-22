@@ -1,5 +1,5 @@
 locals {
-  config_map_common = <<EOF
+  config_map_common    = <<EOF
 - groups:
   - system:bootstrappers
   - system:nodes
@@ -13,7 +13,31 @@ locals {
   username: ${role.name}
     EOF
   ])
-  name     = "workload"
+  name                 = "workload"
+  platform_dockerfile = {
+    go     = <<EOF
+          FROM golang:1.14
+          WORKDIR /go/src/app
+          COPY . .
+          RUN go get -d -v ./...
+          RUN go install -v ./...
+          EXPOSE 8080
+          USER 1000:1000
+          ENV PORT=8080
+          CMD ["app"]
+    EOF
+    nodejs = <<EOF
+          FROM node:12.18.2
+          WORKDIR /usr/src/app
+          COPY package*.json ./
+          RUN npm install
+          COPY . .
+          EXPOSE 8080
+          USER 1000:1000
+          ENV PORT=8080
+          CMD [ "npm", "start" ]
+    EOF
+  }
 }
 
 data "aws_region" "this" {}
@@ -283,15 +307,7 @@ phases:
           EOT
       - |
           cat <<EOT > Dockerfile
-          FROM node:12.18.2
-          WORKDIR /usr/src/app
-          COPY package*.json ./
-          RUN npm install
-          COPY . .
-          EXPOSE 8080
-          USER 1000:1000
-          ENV PORT=8080
-          CMD [ "npm", "start" ]
+${local.platform_dockerfile[each.value["platform"]]}
           EOT
   build:
     commands:
