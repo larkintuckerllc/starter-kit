@@ -8,11 +8,11 @@ A starting point for building out a highly available Amazon Elastic Kubernetes S
 
 - [Monthly Cost Details](cost-details): Breakdown of AWS costs in running the resources created by the Starter Kit
 
-- [Under the Hood](under-hood): Explaination of the resources created by the Starter Kit
+- [Under the Hood](under-hood): Explanation of the resources created by the Starter Kit
 
-- [Changelog](change-log)
+- [Changelog](changelog); Summary of changes across versions
 
-- [Previous Versions](previous-versions)
+- [Previous Versions](previous-versions); Previous verions' documentation
 
 ## Contributing
 
