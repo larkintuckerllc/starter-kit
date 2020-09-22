@@ -38,6 +38,10 @@ locals {
           CMD [ "npm", "start" ]
     EOF
   }
+  platform_version = {
+    go     = "$(cat VERSION)"
+    nodejs = "$(node -p \"require('./package.json').version\")"
+  }
 }
 
 data "aws_region" "this" {}
@@ -297,7 +301,7 @@ version: 0.2
 phases:
   pre_build:
     commands:
-      - export VERSION=$(node -p "require('./package.json').version")
+      - export VERSION=${local.platform_version[each.value["platform"]]}
       - |
           cat <<EOT > .dockerignore
           .dockerignore
