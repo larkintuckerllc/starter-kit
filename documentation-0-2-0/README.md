@@ -54,7 +54,23 @@ To be used as the code for a Starter Kit workload, projects must:
 
 ## Go Workload Additional Specifications
 
-TODO
+To be used as the code for a Starter Kit workload, Go projects must additionally:
+
+- Operable with Go 1.14
+
+- Include a *go.mod* file
+
+- The *go.mod* file must specify a module name ending in *app*, e.g., *app* or *github.com/larkintuckerllc/app*
+
+- The *go.mod* file must include dependencies
+
+- Include a file named *VERSION*; single line with version, semantic versioning recommended
+
+- (recommended) Include a *go.sum* file
+
+The [Starter Kit Image Go](https://github.com/larkintuckerllc/starter-kit-image-go) project provides a minimal example satisfying these requirements.
+
+**note**: This application responds with a HTTP status code 200 (OK) for unadorned GET requests on any endpoint.
 
 ## Node.js Workload Additional Specifications
 
@@ -74,7 +90,7 @@ To be used as the code for a Starter Kit workload, Node.js projects must additio
 
 - The *.gitignore* file must include *node_modules* line
 
-- (recommended) Include a *package-lock.json*
+- (recommended) Include a *package-lock.json* file
 
 The [Starter Kit Image Node.js](https://github.com/larkintuckerllc/starter-kit-image-nodejs) project provides a minimal example satisfying these requirements.
 
