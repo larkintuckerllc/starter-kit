@@ -32,7 +32,7 @@ Following the instructions, [Create a Systems Manager parameter (console)](https
 
 ## Download Terraform Configurations
 
-Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit/releases/tag/0.1.0) GitHub repository.
+Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in the *tf* folder of the downloadable [starter-kit](https://github.com/larkintuckerllc/starter-kit/releases/tag/0.2.0) GitHub repository.
 
 ## Update Terraform Pre-Cluster Configuration's Constants
 
