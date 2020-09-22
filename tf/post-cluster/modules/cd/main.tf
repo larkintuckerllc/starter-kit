@@ -311,8 +311,7 @@ phases:
           EOT
       - |
           cat <<EOT > Dockerfile
-${local.platform_dockerfile[each.value["platform"]]}
-          EOT
+${local.platform_dockerfile[each.value["platform"]]}          EOT
   build:
     commands:
       - echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
