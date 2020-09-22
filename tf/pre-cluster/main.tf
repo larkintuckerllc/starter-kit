@@ -1,3 +1,7 @@
+locals {
+  sk_version = "0.2.0"
+}
+
 provider "aws" {
   region = var.REGION
 }

@@ -1,3 +1,7 @@
+locals {
+  sk_version = "0.2.0"
+}
+
 provider "aws" {
   region = var.REGION
 }
@@ -25,6 +29,7 @@ data "aws_eks_cluster_auth" "this" {
 
 module "workloads" {
   source   = "./modules/workloads"
+  sk_version  = local.sk_version
   workload = var.workload
 }
 
@@ -39,6 +44,7 @@ module "alb_ingress_controller" {
 module "ingress" {
   source          = "./modules/ingress"
   certificate_arn = var.certificate_arn
+  sk_version      = local.sk_version
   workload        = var.workload
   zone_name       = var.zone_name
 }
@@ -47,5 +53,6 @@ module "cd" {
   source      = "./modules/cd"
   cluster_arn = data.aws_eks_cluster.this.arn
   identifier  = var.IDENTIFIER
+  sk_version  = local.sk_version
   workload    = var.workload
 }

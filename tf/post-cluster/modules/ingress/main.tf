@@ -1,7 +1,6 @@
 locals {
   instance = "ingress"
   name     = "ingress"
-  version  = "0.1.0"
 }
 
 data "aws_route53_zone" "this" {
@@ -34,7 +33,7 @@ resource "kubernetes_ingress" "this" {
     labels = {
       "app.kubernetes.io/instance" = local.instance
       "app.kubernetes.io/name"     = local.name
-      "app.kubernetes.io/version"  = local.version
+      "app.kubernetes.io/version"  = var.sk_version
     }
   }
   spec {

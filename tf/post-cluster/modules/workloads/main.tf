@@ -1,6 +1,5 @@
 locals {
   name     = "workload"
-  version  = "0.1.0"
 }
 
 # FOR EACH WORKLOAD RESOURCES
@@ -17,7 +16,7 @@ resource "kubernetes_deployment" "this" {
     labels = {
       "app.kubernetes.io/instance" = each.key
       "app.kubernetes.io/name"     = local.name
-      "app.kubernetes.io/version"  = local.version
+      "app.kubernetes.io/version"  = var.sk_version
     }
   }
   spec {
@@ -32,7 +31,7 @@ resource "kubernetes_deployment" "this" {
         labels = {
           "app.kubernetes.io/instance" = each.key
           "app.kubernetes.io/name"     = local.name
-          "app.kubernetes.io/version"  = local.version
+          "app.kubernetes.io/version"  = var.sk_version
           instance                     = each.key
         }
       }
@@ -87,7 +86,7 @@ resource "kubernetes_service" "this" {
     labels   = {
       "app.kubernetes.io/instance" = each.key
       "app.kubernetes.io/name"     = local.name
-      "app.kubernetes.io/version"  = local.version
+      "app.kubernetes.io/version"  = var.sk_version
     }
   }
   spec {

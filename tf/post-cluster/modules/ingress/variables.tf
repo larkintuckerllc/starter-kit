@@ -2,6 +2,10 @@ variable "certificate_arn" {
   type = string
 }
 
+variable "sk_version" {
+  type = string
+}
+
 variable "workload" {
   type = map(object({
     external             = bool

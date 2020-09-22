@@ -14,7 +14,6 @@ locals {
     EOF
   ])
   name     = "workload"
-  version  = "0.1.0"
 }
 
 data "aws_region" "this" {}
@@ -206,7 +205,7 @@ resource "kubernetes_role" "this" {
     labels = {
       "app.kubernetes.io/instance" = each.key
       "app.kubernetes.io/name"     = local.name
-      "app.kubernetes.io/version"  = local.version
+      "app.kubernetes.io/version"  = var.sk_version
     }
   }
   rule {
@@ -224,7 +223,7 @@ resource "kubernetes_role_binding" "this" {
     labels = {
       "app.kubernetes.io/instance" = each.key
       "app.kubernetes.io/name"     = local.name
-      "app.kubernetes.io/version"  = local.version
+      "app.kubernetes.io/version"  = var.sk_version
     }
   }
   role_ref {
