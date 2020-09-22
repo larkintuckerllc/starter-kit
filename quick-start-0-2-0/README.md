@@ -92,9 +92,13 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 2. Edit the file *tf/post-cluster/main.tf*
 
-3. Update the value of *config-context* in the *kubernetes* provider block
+3. Uncomment the *kubernetes* provider block labeled with *FOR IMPORT ONLY*
 
-4. Save the file
+4. Comment the *kubernetes* provider block with no comments
+
+5. Update the value of *config-context* in the *kubernetes* provider block
+
+6. Save the file
 
 ## Initialize Post-Cluster Configuration
 
@@ -110,7 +114,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 
 2. Comment the *kubernetes* provider block labeled with *FOR IMPORT ONLY*
 
-3. Uncomment  the *kubernetes* provider block labeled with *FOR POST-IMPORT ONLY*
+3. Uncomment the *kubernetes* provider with no comments
 
 **note**: The Terraform *import* command does not support variables in provider blocks
 
@@ -133,6 +137,7 @@ workload        = {
     limits_cpu           = "100m"
     limits_memory        = "128Mi"
     liveness_probe_path  = "/"
+    platform             = "nodejs"
     readiness_probe_path = "/"
     replicas             = 1
     requests_cpu         = "100m"
