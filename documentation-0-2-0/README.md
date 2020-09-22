@@ -11,6 +11,7 @@ workload        = {
     limits_cpu           = "100m"
     limits_memory        = "128Mi"
     liveness_probe_path  = "/"
+    platform             = "nodejs"
     readiness_probe_path = "/"
     replicas             = 1
     requests_cpu         = "100m"
@@ -28,6 +29,8 @@ The workload's key, e.g, *sample*, must be a unique (across the infrastructure) 
 - *limits_memory*: String value. The maximum memory allocated to the workload
 
 - *liveness_probe_path*: String value. See discussion below
+
+- *platform*: String value; *go* | *nodejs*
 
 - *readiness_probe_path*: String value. See discussion below
 
@@ -48,6 +51,10 @@ To be used as the code for a Starter Kit workload, projects must:
 - Application provides an endpoint that returns a HTTP status code 200 (OK) for unadorned GET requests, i.e., no headers, query parameters, etc. This endpoint is used regularly to determine the health of the application. Used as a Kubernetes [liveness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command). This is used for the *liveness_probe_path* attribute and optionally the *readiness_probe_path*
 
 - (optional) Application provides a second endpoint that returns a HTTP status code 200 (OK) for unadorned GET requests, i.e., no headers, query parameters, etc. This endpoint is used regularly to determine the readiness of the application. Used as a Kubernetes [readiness probe](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes). This is used for the *readiness_probe_path*
+
+## Go Workload Additional Specifications
+
+TODO
 
 ## Node.js Workload Additional Specifications
 
