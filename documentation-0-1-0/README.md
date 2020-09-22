@@ -53,6 +53,8 @@ To be used as the code for a Starter Kit workload, projects must:
 
 To be used as the code for a Starter Kit workload, Node.js projects must additionally:
 
+- Operable with Node.js 12.18.2
+
 - Include a *package.json* file
 
 - The *package.json* file must include a *version* attribute; semantic versioning recommended
