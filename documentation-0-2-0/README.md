@@ -58,15 +58,11 @@ To be used as the code for a Starter Kit workload, Go projects must additionally
 
 - Operable with Go 1.14
 
-- Include a *go.mod* file
+- Be a Go module, i.e., include a *go.mod* file
 
-- The *go.mod* file must specify a module name ending in *app*, e.g., *app* or *github.com/larkintuckerllc/app*
-
-- The *go.mod* file must include dependencies
+- Be in the [Standard Go Project Layout](https://github.com/golang-standards/project-layout) with the web application code in folder *cmd/app*
 
 - Include a file named *VERSION*; single line with version, semantic versioning recommended
-
-- (recommended) Include a *go.sum* file
 
 The [Starter Kit Image Go](https://github.com/larkintuckerllc/starter-kit-image-go) project provides a minimal example satisfying these requirements.
 
