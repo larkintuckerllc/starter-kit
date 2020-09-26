@@ -6,5 +6,5 @@ REGION          = "[replace]"  # us-east-1
 # VARIABLES
 
 certificate_arn = "[replace]" # arn:aws:acm:[obmitted]:[obmitted]:certificate/[obmitted]
-workload        = {}
+workload = {}
 zone_name       = "[replace]" # example.com
