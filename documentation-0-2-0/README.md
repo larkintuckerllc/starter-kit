@@ -5,7 +5,7 @@
 Workloads are defined in the file *tf/post-cluster/terraform.tfvars* under the *workload* attribute, e.g.:
 
 ```hcl
-workload        = {
+workload = {
   sample = {
     external             = true
     limits_cpu           = "100m"
