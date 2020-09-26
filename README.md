@@ -6,6 +6,8 @@ A starting point for building out a highly available Amazon Elastic Kubernetes S
 
 - [Documentation (0.2.0)](documentation-0-2-0): Additional details on using the Starter Kit
 
+- [Cookbook](cookbook): Examples of extending the Starter Kit
+
 - [Monthly Cost Details](cost-details): Breakdown of AWS costs in running the resources created by the Starter Kit
 
 - [Under the Hood](under-hood): Explanation of the resources created by the Starter Kit
