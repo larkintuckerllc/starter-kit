@@ -53,7 +53,7 @@ data "aws_region" "this" {}
 data "aws_caller_identity" "this" {}
 
 # CODEPIPELINE BUCKET
-# WHEN DESTORYING WILL FAIL BECAUSE BUCKET IS NOT EMPTY; EMPTY AND RETRY
+# ISSUE: WHEN DESTORYING WILL FAIL BECAUSE BUCKET IS NOT EMPTY; EMPTY AND RETRY
 
 resource "aws_s3_bucket" "this" {
   bucket = "${var.identifier}-codepipeline-${data.aws_region.this.name}"
@@ -132,46 +132,44 @@ resource "aws_iam_role_policy" "codebuild" {
         {
             "Effect": "Allow",
             "Action": "ssm:GetParameters",
-            "Resource": "arn:aws:ssm:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:parameter/dockerhub_username"
-        },
-        {
-            "Effect": "Allow",
-            "Action": "ssm:GetParameters",
-            "Resource": "arn:aws:ssm:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:parameter/dockerhub_password"
-        },
-        {
-            "Effect": "Allow",
             "Resource": [
-                "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/codebuild/${var.identifier}-${each.key}",
-                "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/codebuild/${var.identifier}-${each.key}:*"
-            ],
-            "Action": [
-                "logs:CreateLogGroup",
-                "logs:CreateLogStream",
-                "logs:PutLogEvents"
+              "arn:aws:ssm:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:parameter/dockerhub_username",
+              "arn:aws:ssm:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:parameter/dockerhub_password"
             ]
         },
         {
             "Effect": "Allow",
-            "Resource": [
-                "${aws_s3_bucket.this.arn}",
-                "${aws_s3_bucket.this.arn}/*"
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
             ],
+            "Resource": [
+                "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/codebuild/${var.identifier}-${each.key}",
+                "arn:aws:logs:${data.aws_region.this.name}:${data.aws_caller_identity.this.account_id}:log-group:/aws/codebuild/${var.identifier}-${each.key}:*"
+            ]
+        },
+        {
+            "Effect": "Allow",
             "Action": [
                 "s3:PutObject",
                 "s3:GetObject",
                 "s3:GetObjectVersion",
                 "s3:GetBucketAcl",
                 "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "${aws_s3_bucket.this.arn}",
+                "${aws_s3_bucket.this.arn}/*"
             ]
         },
         {
             "Effect": "Allow",
-            "Resource": [
-                "${aws_codecommit_repository.this[each.key].arn}"
-            ],
             "Action": [
                 "codecommit:GitPull"
+            ],
+            "Resource": [
+                "${aws_codecommit_repository.this[each.key].arn}"
             ]
         },
         {
@@ -367,6 +365,7 @@ resource "aws_iam_role_policy" "codepipeline" {
     "Version": "2012-10-17",
     "Statement": [
         {
+            "Effect": "Allow",
             "Action": [
                 "codecommit:CancelUploadArchive",
                 "codecommit:GetBranch",
@@ -374,32 +373,31 @@ resource "aws_iam_role_policy" "codepipeline" {
                 "codecommit:GetUploadArchiveStatus",
                 "codecommit:UploadArchive"
             ],
-            "Resource": "${aws_codecommit_repository.this[each.key].arn}",
-            "Effect": "Allow"
+            "Resource": "${aws_codecommit_repository.this[each.key].arn}"
         },
         {
             "Effect": "Allow",
-            "Resource": [
-                "${aws_s3_bucket.this.arn}",
-                "${aws_s3_bucket.this.arn}/*"
-            ],
             "Action": [
                 "s3:PutObject",
                 "s3:GetObject",
                 "s3:GetObjectVersion",
                 "s3:GetBucketAcl",
                 "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "${aws_s3_bucket.this.arn}",
+                "${aws_s3_bucket.this.arn}/*"
             ]
         },
         {
+            "Effect": "Allow",
             "Action": [
                 "codebuild:BatchGetBuilds",
                 "codebuild:StartBuild",
                 "codebuild:BatchGetBuildBatches",
                 "codebuild:StartBuildBatch"
             ],
-            "Resource": "${aws_codebuild_project.this[each.key].arn}",
-            "Effect": "Allow"
+            "Resource": "${aws_codebuild_project.this[each.key].arn}"
         }
     ]
 }

@@ -19,6 +19,7 @@ data "aws_lb" "this" {
 
 # INGRESS
 
+# https://kubernetes-sigs.github.io/aws-alb-ingress-controller/guide/tasks/ssl_redirect/
 resource "kubernetes_ingress" "this" {
   count = length({for key, workload in var.workload : key => workload if workload["external"]}) == 0 ? 0 : 1
   metadata {

@@ -1,5 +1,6 @@
 # IAM ROLES
 
+# https://docs.aws.amazon.com/eks/latest/userguide/service_IAM_role.html
 resource "aws_iam_role" "eks_cluster" {
   assume_role_policy = <<EOF
 {
@@ -21,6 +22,7 @@ EOF
   }
 }
 
+# https://docs.aws.amazon.com/eks/latest/userguide/create-node-role.html
 resource "aws_iam_role" "node_instance" {
   assume_role_policy = <<EOF
 {
@@ -104,6 +106,7 @@ data "tls_certificate" "this" {
   url = "${aws_eks_cluster.this.identity.0.oidc.0.issuer}"
 }
 
+# https://docs.aws.amazon.com/eks/latest/userguide/enable-iam-roles-for-service-accounts.html
 resource "aws_iam_openid_connect_provider" "this" {
   client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = ["${data.tls_certificate.this.certificates.0.sha1_fingerprint}"]
