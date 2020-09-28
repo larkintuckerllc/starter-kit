@@ -1,3 +1,11 @@
+data "aws_ssm_parameter" "mydb_master_password" {
+  name = "mydb_master_password"
+}
+
+data "aws_ssm_parameter" "mydb_master_username" {
+  name = "mydb_master_username"
+}
+
 data "aws_vpc" "this" {
   tags = {
     Infrastructure = var.identifier
@@ -34,4 +42,34 @@ resource "aws_security_group" "this" {
     Name           = "${var.identifier}-postgresql"
   }
   vpc_id = data.aws_vpc.this.id
+}
+
+# MYDB
+
+resource "aws_rds_cluster" "mydb" {
+  cluster_identifier    = "mydb"
+  database_name         = "mydb"
+  db_subnet_group_name  = aws_db_subnet_group.this.name
+  engine                = "aurora-postgresql"
+  master_password       = data.aws_ssm_parameter.mydb_master_password.value
+  master_username       = data.aws_ssm_parameter.mydb_master_username.value
+  skip_final_snapshot   = true
+  tags = {
+    Infrastructure = var.identifier
+  }
+  vpc_security_group_ids = [
+    aws_security_group.this.id
+  ]
+}
+
+resource "aws_rds_cluster_instance" "mydb" {
+  count                = 1
+  cluster_identifier   = aws_rds_cluster.mydb.id
+  db_subnet_group_name = aws_rds_cluster.mydb.db_subnet_group_name
+  engine               = aws_rds_cluster.mydb.engine
+  identifier           = "mydb-${count.index}"
+  instance_class       = "db.r4.large"
+  tags = {
+    Infrastructure = var.identifier
+  }
 }
