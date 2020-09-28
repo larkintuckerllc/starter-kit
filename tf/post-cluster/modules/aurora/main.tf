@@ -1,3 +1,7 @@
+data "aws_eks_cluster" "this" {
+  name = var.identifier
+}
+
 data "aws_ssm_parameter" "mydb_master_password" {
   name = "mydb_master_password"
 }
@@ -28,12 +32,13 @@ resource "aws_db_subnet_group" "this" {
   }
 }
 
-# TODO: FIX SECURITY GROUP TO CLUSTER
 resource "aws_security_group" "this" {
   ingress {
-    cidr_blocks = ["0.0.0.0/0"]
     from_port   = 5432
     protocol    = "tcp"
+    security_groups = [
+      data.aws_eks_cluster.this.vpc_config[0].cluster_security_group_id
+    ]
     to_port     = 5432
   }
   name   = "${var.identifier}-postgresql"
