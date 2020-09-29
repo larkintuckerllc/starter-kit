@@ -6,18 +6,18 @@ provider "aws" {
   region = var.REGION
 }
 
-provider "kubernetes" { # FOR IMPORT ONLY
-  config_context = "arn:aws:eks:us-east-1:143287522423:cluster/starter-kit" # arn:aws:eks:[obmitted]:[obmitted]:cluster/[obmitted]
-}
-
 /*
+provider "kubernetes" { # FOR IMPORT ONLY
+  config_context = "[replace]" # arn:aws:eks:[obmitted]:[obmitted]:cluster/[obmitted]
+}
+*/
+
 provider "kubernetes" {
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.this.certificate_authority[0].data)
   host                   = data.aws_eks_cluster.this.endpoint
   load_config_file       = false
   token                  = data.aws_eks_cluster_auth.this.token
 }
-*/
 
 data "aws_eks_cluster" "this" {
   name = var.IDENTIFIER
