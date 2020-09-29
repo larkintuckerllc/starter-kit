@@ -17,6 +17,10 @@ variable "workload" {
     replicas             = number
     requests_cpu         = string
     requests_memory      = string
+    resources            = list(object({
+      type = string
+      id   = string
+    }))
   }))
 }
 
