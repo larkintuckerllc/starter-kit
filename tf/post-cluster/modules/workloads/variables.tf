@@ -19,3 +19,10 @@ variable "workload" {
     }))
   }))
 }
+
+variable "aurora_database" {
+  type = map(object({
+    reader_url = string
+    url        = string
+  }))
+}
