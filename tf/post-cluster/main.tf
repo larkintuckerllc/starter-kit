@@ -28,9 +28,10 @@ data "aws_eks_cluster_auth" "this" {
 }
 
 module "workloads" {
-  source      = "./modules/workloads"
-  sk_version  = local.sk_version
-  workload    = var.workload
+  source          = "./modules/workloads"
+  aurora_database = module.aurora.database
+  sk_version      = local.sk_version
+  workload        = var.workload
 }
 
 module "alb_ingress_controller" {

@@ -41,6 +41,20 @@ resource "kubernetes_deployment" "this" {
       }
       spec {
         container {
+          dynamic "env" { // RESOURCE AURORA URL
+            for_each = [for resource in each.value["resources"] : resource["id"] if resource["type"] == "aurora"]
+            content {
+              name  = "${upper(env.value)}_AURORA_URL"
+              value = var.aurora_database[env.value].url
+            }
+          }
+          dynamic "env" { // RESOURCE AURORA READER_URL
+            for_each = [for resource in each.value["resources"] : resource["id"] if resource["type"] == "aurora"]
+            content {
+              name  = "${upper(env.value)}_AURORA_READER_URL"
+              value = var.aurora_database[env.value].reader_url
+            }
+          }
           image             = local.platform_image[each.value["platform"]]
           image_pull_policy = "Always"
           name              = local.name
