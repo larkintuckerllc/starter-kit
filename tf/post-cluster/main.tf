@@ -56,3 +56,8 @@ module "cd" {
   sk_version  = local.sk_version
   workload    = var.workload
 }
+
+module "aurora" {
+  source      = "./modules/aurora"
+  identifier  = var.IDENTIFIER
+}
