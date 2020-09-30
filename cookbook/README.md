@@ -1,3 +1,3 @@
 # Cookbook
 
-A work in progress.
+- [Aurora](aurora)
