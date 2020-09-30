@@ -147,7 +147,7 @@ module "workloads" {
 }
 ```
 
-Finally, we add in the environment variables to the container specification for workloads that have an aurora resource, i.e., adding in: *tf/post-cluster/modules/workloads/main.tf*:
+We add in the environment variables to the container specification for workloads that have an aurora resource, i.e., adding in: *tf/post-cluster/modules/workloads/main.tf*:
 
 ```hcl
 dynamic "env" { // RESOURCE AURORA URL
@@ -165,3 +165,5 @@ dynamic "env" { // RESOURCE AURORA READER_URL
   }
 }
 ```
+
+Finally, we update our application code to use the environment variables, e.g,. *MYDB_AURORA_URL* or *MYDB_AURORA_READER_URL* to access the database.
