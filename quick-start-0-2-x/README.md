@@ -1,4 +1,6 @@
-# Quick Start (0.2.0)
+# Quick Start (0.2.x)
+
+**note**: As of the version change 0.2.1, the *workload* variable requires entries with a *resources* attriute; not shown in video.
 
 [![Video](img/video.png)](https://youtu.be/bOkl1OEc5oE)
 
@@ -133,7 +135,7 @@ Two Terraform configurations, *pre-cluster* and *post-cluster*, are provided in 
 3. From the command-line in the *post-cluster* folder, execute `terraform apply`; copy output
 
 ```hcl
-workload        = {
+workload = {
   sample = {
     external             = true
     limits_cpu           = "100m"
@@ -144,6 +146,7 @@ workload        = {
     replicas             = 1
     requests_cpu         = "100m"
     requests_memory      = "128Mi"
+    resources = {}
   }
 }
 ```

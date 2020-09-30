@@ -1,5 +1,5 @@
 locals {
-  sk_version = "0.2.0"
+  sk_version = "0.2.1"
 }
 
 provider "aws" {

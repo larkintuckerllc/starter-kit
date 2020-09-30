@@ -1,4 +1,4 @@
-# Documentation (0.2.0)
+# Documentation (0.2.x)
 
 ## Workload Specification
 
@@ -16,6 +16,7 @@ workload = {
     replicas             = 1
     requests_cpu         = "100m"
     requests_memory      = "128Mi"
+    resources = {}
   }
 }
 ```
@@ -39,6 +40,8 @@ The workload's key, e.g, *sample*, must be a unique (across the infrastructure) 
 - *requests_cpu*: String value. The minimum CPU available to the workload
 
 - *requests_memory*: String value. The minimum memory available to the workload
+
+- *resources*: TODO
 
 To be used as the code for a Starter Kit workload, projects must:
 
