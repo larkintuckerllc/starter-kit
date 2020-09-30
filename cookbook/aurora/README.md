@@ -121,7 +121,7 @@ We add an output to the *tf/post-cluster/outputs.tf*. This is used to remind you
 
 ```hcl
 output "aurora_ids" {
-  value = [for k, v in module.aurora.database : k]
+  value = [for id, database in module.aurora.database : id]
 }
 ```
 
