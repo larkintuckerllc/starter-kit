@@ -146,7 +146,7 @@ workload = {
     replicas             = 1
     requests_cpu         = "100m"
     requests_memory      = "128Mi"
-    resources = {}
+    resources = []
   }
 }
 ```

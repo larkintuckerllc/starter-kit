@@ -16,7 +16,7 @@ workload = {
     replicas             = 1
     requests_cpu         = "100m"
     requests_memory      = "128Mi"
-    resources = {}
+    resources = []
   }
 }
 ```
@@ -41,7 +41,7 @@ The workload's key, e.g, *sample*, must be a unique (across the infrastructure) 
 
 - *requests_memory*: String value. The minimum memory available to the workload
 
-- *resources*: TODO
+- *resources*: List(object) value. Object consists of two string attributes: *type* and *id*. This is a placeholder attribute used in the examples provided in the cookbook
 
 To be used as the code for a Starter Kit workload, projects must:
 
