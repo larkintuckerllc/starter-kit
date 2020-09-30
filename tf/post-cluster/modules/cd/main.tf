@@ -48,9 +48,13 @@ locals {
   }
 }
 
-data "aws_region" "this" {}
-
 data "aws_caller_identity" "this" {}
+
+data "aws_eks_cluster" "this" {
+  name = var.identifier
+}
+
+data "aws_region" "this" {}
 
 # CODEPIPELINE BUCKET
 # ISSUE: WHEN DESTORYING WILL FAIL BECAUSE BUCKET IS NOT EMPTY; EMPTY AND RETRY
@@ -120,7 +124,7 @@ resource "aws_iam_role_policy" "codebuild" {
         {
             "Effect": "Allow",
             "Action": "eks:DescribeCluster",
-            "Resource": "${var.cluster_arn}"
+            "Resource": "${data.aws_eks_cluster.this.arn}"
         },
         {
             "Effect": "Allow",

@@ -28,9 +28,9 @@ data "aws_eks_cluster_auth" "this" {
 }
 
 module "workloads" {
-  source   = "./modules/workloads"
+  source      = "./modules/workloads"
   sk_version  = local.sk_version
-  workload = var.workload
+  workload    = var.workload
 }
 
 module "alb_ingress_controller" {
@@ -51,7 +51,6 @@ module "ingress" {
 
 module "cd" {
   source      = "./modules/cd"
-  cluster_arn = data.aws_eks_cluster.this.arn
   identifier  = var.IDENTIFIER
   sk_version  = local.sk_version
   workload    = var.workload
