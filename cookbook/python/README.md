@@ -1,5 +1,9 @@
 # Python
 
+## Issue
+
+Apparently the *tiangolo/meinheld-gunicorn* image requires a RW filesystem. The fix is either research how to run this image in RO mode, find another base image, or hack in a workaround in the *workloads* module to accommodate *python* workloads.
+
 ## Update
 
 We first need to update *tf/post-cluster/modules/workloads/* to supply a placeholder Python image:
